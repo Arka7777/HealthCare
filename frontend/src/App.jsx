@@ -11,6 +11,7 @@ import ClinicListPage from "./Clinic/ClinicListPage"
 import ClinicPage from "./Clinic/ClinicPage.jsx"
 import OurImpacts from "./Home_components/Our_impacts.jsx"
 import Blog from "./Home_components/Blog.jsx"
+import Footer from "./Home_components/Footer.jsx"
 
 
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
           <HowItWorks/>
           <OurImpacts/>
           <Blog/>
+          <Footer/>
         </>
       ),
     },

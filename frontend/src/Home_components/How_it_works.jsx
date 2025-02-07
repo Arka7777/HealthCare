@@ -13,7 +13,7 @@ export default function HowItWorks() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 sm:gap-12">
            
             <div className="w-full">
-              <div className="p-6 bg-white rounded-lg shadow-lg h-full">
+              <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl h-full">
                 <div className="flex justify-center mb-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +39,7 @@ export default function HowItWorks() {
   
            
             <div className="w-full">
-              <div className="p-6 bg-white rounded-lg shadow-lg h-full">
+              <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl h-full">
                 <div className="flex justify-center mb-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -65,7 +65,7 @@ export default function HowItWorks() {
   
            
             <div className="w-full">
-              <div className="p-6 bg-white rounded-lg shadow-lg h-full">
+              <div className="p-6 bg-white rounded-lg shadow-lg hover:shadow-xl h-full">
                 <div className="flex justify-center mb-6">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
