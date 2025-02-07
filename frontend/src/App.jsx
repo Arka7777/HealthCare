@@ -5,6 +5,7 @@ import Feature from "./Home_components/Feature"
 import ContactUs from "./Home_components/Contact_us"
 import Find_Doctors from "./FindDoctors/Find_Doctors"
 import Search_Medicines from "./Home_components/Search_Medicines"
+import HowItWorks from "./Home_components/How_it_works"
 
 
 
@@ -23,6 +24,7 @@ export default function App() {
           <Navbar />
           <Hero />
           <Feature />
+          <HowItWorks/>
         </>
       ),
     },
