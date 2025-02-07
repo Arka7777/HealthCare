@@ -17,6 +17,7 @@ import Footer from "./Home_components/Footer.jsx"
 import Winter from "./Blog_article_components/Winter.jsx"
 import MentalHealth from "./Blog_article_components/Mental_health.jsx"
 import Insurance from "./Blog_article_components/Insurance.jsx"
+import { Five } from "./Blog_article_components/Five.jsx"
 
 export default function App() {
 
@@ -144,6 +145,18 @@ export default function App() {
         </>
       ),
     },
+
+    {
+      path: "/five",
+      element: (
+        <>
+          <Navbar />
+          <Five/>
+        </>
+      ),
+    },
+
+
   ])
 
   return <RouterProvider router={router} />
