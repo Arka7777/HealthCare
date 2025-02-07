@@ -9,7 +9,8 @@ import Search_Medicines from "./Home_components/Search_Medicines"
 import HowItWorks from "./Home_components/How_it_works"
 import ClinicListPage from "./Clinic/ClinicListPage"
 import ClinicPage from "./Clinic/ClinicPage.jsx"
-
+import OurImpacts from "./Home_components/Our_impacts.jsx"
+import Blog from "./Home_components/Blog.jsx"
 
 
 export default function App() {
@@ -23,6 +24,8 @@ export default function App() {
           <Hero />
           <Feature />
           <HowItWorks/>
+          <OurImpacts/>
+          <Blog/>
         </>
       ),
     },
