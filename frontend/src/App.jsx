@@ -13,6 +13,10 @@ import RateClinicPage from "./Clinic/RateClinicPage.jsx"
 import OurImpacts from "./Home_components/Our_impacts.jsx"
 import Blog from "./Home_components/Blog.jsx"
 import clinicData from "./Clinic/ClinicData"
+import Footer from "./Home_components/Footer.jsx"
+import Winter from "./Blog_article_components/Winter.jsx"
+import MentalHealth from "./Blog_article_components/Mental_health.jsx"
+import Insurance from "./Blog_article_components/Insurance.jsx"
 
 export default function App() {
 
@@ -27,6 +31,7 @@ export default function App() {
           <HowItWorks/>
           <OurImpacts/>
           <Blog/>
+          <Footer/>
         </>
       ),
     },
@@ -110,6 +115,32 @@ export default function App() {
         <>
           <Navbar />
           <RateClinicPage />
+    {
+      path: "/winter",
+      element: (
+        <>
+          <Navbar />
+          <Winter/>
+        </>
+      ),
+    },
+
+    {
+      path: "/mental_health",
+      element: (
+        <>
+          <Navbar />
+          <MentalHealth/>
+        </>
+      ),
+    },
+
+    {
+      path: "/insurance",
+      element: (
+        <>
+          <Navbar />
+          <Insurance/>
         </>
       ),
     },

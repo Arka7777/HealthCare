@@ -1,5 +1,6 @@
 
 import {Clinic} from '../model/clinicModel.js'
+import 'dotenv/config.js'
 
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
@@ -60,7 +61,7 @@ export const login = async (req, res) => {
         success: false,
       });
     }
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, clinic.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
         message: "Incorrect email or password",
@@ -70,7 +71,7 @@ export const login = async (req, res) => {
 
    
     const tokenData = {
-      userId: user._id,
+      clinicId: clinic._id,
     };
 
     const token = await jwt.sign(tokenData, process.env.JWT_SECRET, {
@@ -93,7 +94,7 @@ export const login = async (req, res) => {
         httpsOnly: true,
         sameSite: "strict",
       }).json({
-        message:`welcome back ${clinic.clinicName}`,
+        message:`welcome back ${clinic.name}`,
         clinic,
         success:true,
       });

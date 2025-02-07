@@ -4,25 +4,25 @@ export default function Blog() {
         title: "How to Stay Healthy During the Winter",
         description: "Learn how to maintain your health with simple tips for staying fit during the colder months.",
         link: "Winter",
-        date: "January 15, 2025",
+        date: "February 7, 2025",
       },
       {
         title: "Top 5 Benefits of Regular Health Checkups",
         description: "Regular health checkups can help you stay on top of your health and prevent future medical issues.",
         link: "Five",
-        date: "January 10, 2025",
+        date: "February 7, 2025",
       },
       {
         title: "Understanding Your Health Insurance Benefits",
         description: "A simple guide to understanding your health insurance policy and how to make the most of it.",
         link: "Insurance",
-        date: "December 30, 2024",
+        date: "February 7, 2025",
       },
       {
         title: "The Importance of Mental Health in Healthcare",
         description: "Mental health is just as important as physical health. Here's why mental well-being matters.",
         link: "Mental_health",
-        date: "December 20, 2024",
+        date: "February 7, 2025",
       },
     ]
   
