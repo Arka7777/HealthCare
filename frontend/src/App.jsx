@@ -7,6 +7,7 @@ import Find_Doctors from "./FindDoctors/Find_Doctors"
 import About_us from "./Home_components/About_us.jsx"
 import Search_Medicines from "./Home_components/Search_Medicines"
 import HowItWorks from "./Home_components/How_it_works"
+import OurImpacts from "./Home_components/Our_impacts.jsx"
 
 
 export default function App() {
@@ -20,6 +21,7 @@ export default function App() {
           <Hero />
           <Feature />
           <HowItWorks/>
+          <OurImpacts/>
         </>
       ),
     },
