@@ -4,7 +4,7 @@ import Hero from "./Home_components/HeroSection/Hero"
 import Feature from "./Home_components/Feature"
 import ContactUs from "./Home_components/Contact_us"
 import Find_Doctors from "./FindDoctors/Find_Doctors"
-
+import Search_Medicines from "./Home_components/Search_Medicines"
 
 
 
@@ -44,6 +44,16 @@ export default function App() {
           <Find_Doctors />
           </>
         
+      ),
+    },
+
+    {
+      path: "/search-medicines",
+      element: (
+        <>
+          <Navbar />
+          <Search_Medicines />
+        </>
       ),
     },
   ])
