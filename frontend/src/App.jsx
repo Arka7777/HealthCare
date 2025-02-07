@@ -12,6 +12,7 @@ import ClinicPage from "./Clinic/ClinicPage.jsx"
 import OurImpacts from "./Home_components/Our_impacts.jsx"
 import Blog from "./Home_components/Blog.jsx"
 import Footer from "./Home_components/Footer.jsx"
+import Winter from "./Blog_article_components/Winter.jsx"
 
 
 export default function App() {
@@ -93,6 +94,16 @@ export default function App() {
         <>
           <Navbar />
           <ClinicPage />
+        </>
+      ),
+    },
+
+    {
+      path: "/winter",
+      element: (
+        <>
+          <Navbar />
+          <Winter/>
         </>
       ),
     },
