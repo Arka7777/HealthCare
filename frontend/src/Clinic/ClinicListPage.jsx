@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Input } from "./ClinicAssets/input";
-import { Button } from "./ClinicAssets/botton";
+// import { Button } from "./ClinicAssets/botton";
 import { Card, CardContent } from "./ClinicAssets/card";
 import { MapPin, Phone, Clock, Search } from "lucide-react";
 
