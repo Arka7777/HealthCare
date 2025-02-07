@@ -13,6 +13,7 @@ import OurImpacts from "./Home_components/Our_impacts.jsx"
 import Blog from "./Home_components/Blog.jsx"
 import Footer from "./Home_components/Footer.jsx"
 import Winter from "./Blog_article_components/Winter.jsx"
+import MentalHealth from "./Blog_article_components/Mental_health.jsx"
 
 
 export default function App() {
@@ -104,6 +105,16 @@ export default function App() {
         <>
           <Navbar />
           <Winter/>
+        </>
+      ),
+    },
+
+    {
+      path: "/mental_health",
+      element: (
+        <>
+          <Navbar />
+          <MentalHealth/>
         </>
       ),
     },
