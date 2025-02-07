@@ -115,6 +115,9 @@ export default function App() {
         <>
           <Navbar />
           <RateClinicPage />
+        </>
+      )
+    },
     {
       path: "/winter",
       element: (
