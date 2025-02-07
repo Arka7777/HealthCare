@@ -2,6 +2,7 @@ import { createBrowserRouter, RouterProvider, Navigate, useNavigate } from "reac
 import Navbar from "./Home_components/Navbar"
 import Hero from "./Home_components/HeroSection/Hero"
 import Feature from "./Home_components/Feature"
+import Find_Doctors from "./FindDoctors/Find_Doctors"
 
 
 
@@ -24,6 +25,19 @@ export default function App() {
         </>
       ),
     },
+
+    {
+      path: "/find-doctors",
+      element: (
+        <>
+          <Navbar />
+          <Find_Doctors />
+          </>
+        
+      ),
+    },
+
+    
     
   ])
 
