@@ -1,7 +1,7 @@
 import express from "express";
-import { User } from "../model/userModel";
+import { User } from "../model/userModel.js";
 
-const router = express.router()
+const router = express.Router()
 
 router.post('/signup',async(req,res)=>{
       try {
