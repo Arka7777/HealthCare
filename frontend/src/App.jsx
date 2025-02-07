@@ -16,6 +16,7 @@ import Mental_health from "./Blog_article_components/Mental_health"
 import AuthPage from "./AuthPage/AuthPage"
 import ClinicListPage from "./Clinic/ClinicListPage"
 import ClinicPage from "./Clinic/ClinicPage"
+import RateClinicPage from "./Clinic/RateClinicPage.jsx"
 import UserProfile from "./Profile/UserProfile"
 import Contact_us from "./Home_components/Contact_us"
 import { useEffect, useState } from "react"
@@ -26,6 +27,7 @@ import Edit from "./Profile/Edit"
 import { useSelector ,useDispatch} from "react-redux";
 // import store from "../redux/store";
 import { setUser } from "./redux/authslice"
+import clinicData from "./Clinic/ClinicData"
 
 
 const ProtectedRoute = ({ children }) => {
@@ -201,7 +203,7 @@ export default function App() {
         </ProtectedRoute>
       ),
     },
-    {
+       {
       path: "/winter",
       element: (
         <>
@@ -237,6 +239,25 @@ export default function App() {
         </>
       ),
     },
+    
+    {
+      path: "/clinic/:id",
+      element: (
+        <>
+          <Navbar />
+          <ClinicPage state={{ clinic: clinicData }}/>
+        </>
+      ),
+    },
+    {
+      path: "/rate-clinic/:id",
+      element: (
+        <>
+          <Navbar />
+          <RateClinicPage />
+        </>
+      )
+    },
 
     {
       path: "/UserProfile/Edit",
@@ -247,6 +268,7 @@ export default function App() {
         </>
       ),
     },
+    
     //Admin Panels
     //Clinic Admin Panel
     // {
