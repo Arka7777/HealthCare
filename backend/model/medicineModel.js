@@ -1,20 +1,10 @@
 import mongoose  from "mongoose";
+import { type } from "os";
 
-
-const shopSchema=new mongoose.Schema({
+const medicineSchema=new mongoose.Schema({
   name:{
     type:String,
     required:true
-  },
-  email:{
-    type:String,
-    required:true,
-    unique:true
-  },
-  phoneNumber:{
-    type:Number,
-    required:true,
-    unique:true
   },
   password:{
     type:String,
@@ -25,10 +15,19 @@ const shopSchema=new mongoose.Schema({
     required:true,
     unique:true
   },
+  email:{
+    type:String,
+    required:true,
+    unique:true
+  },
+  phoneNumber:{
+    type:Number,
+    required:true
+  },
   address:{
     type:String,
     required:true
-  },
-
+  }
 })
-export const Shop=mongoose.model("shop",shopSchema)
+
+export const Medicine=mongoose.model("medicine",medicineSchema)

@@ -21,7 +21,7 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
     .catch(err => { console.log('Database error powered by Aru...', err) })
 
 //routes
-app.use('/api/v1/user',userRoute)
+// app.use('/api/v1/user',userRoute)
 
 
 app.listen(port,()=>{
