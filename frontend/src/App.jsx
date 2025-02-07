@@ -14,6 +14,7 @@ import Blog from "./Home_components/Blog.jsx"
 import Footer from "./Home_components/Footer.jsx"
 import Winter from "./Blog_article_components/Winter.jsx"
 import MentalHealth from "./Blog_article_components/Mental_health.jsx"
+import Insurance from "./Blog_article_components/Insurance.jsx"
 
 
 export default function App() {
@@ -115,6 +116,16 @@ export default function App() {
         <>
           <Navbar />
           <MentalHealth/>
+        </>
+      ),
+    },
+
+    {
+      path: "/insurance",
+      element: (
+        <>
+          <Navbar />
+          <Insurance/>
         </>
       ),
     },
