@@ -9,13 +9,14 @@ import Search_Medicines from "./Home_components/Search_Medicines"
 import HowItWorks from "./Home_components/How_it_works"
 import ClinicListPage from "./Clinic/ClinicListPage"
 import ClinicPage from "./Clinic/ClinicPage.jsx"
+import RateClinicPage from "./Clinic/RateClinicPage.jsx"
 import OurImpacts from "./Home_components/Our_impacts.jsx"
 import Blog from "./Home_components/Blog.jsx"
+import clinicData from "./Clinic/ClinicData"
 import Footer from "./Home_components/Footer.jsx"
 import Winter from "./Blog_article_components/Winter.jsx"
 import MentalHealth from "./Blog_article_components/Mental_health.jsx"
 import Insurance from "./Blog_article_components/Insurance.jsx"
-
 
 export default function App() {
 
@@ -99,7 +100,21 @@ export default function App() {
         </>
       ),
     },
-
+    {
+      path: "/clinic/:id",
+      element: (
+        <>
+          <Navbar />
+          <ClinicPage state={{ clinic: clinicData }}/>
+        </>
+      ),
+    },
+    {
+      path: "/rate-clinic/:id",
+      element: (
+        <>
+          <Navbar />
+          <RateClinicPage />
     {
       path: "/winter",
       element: (
