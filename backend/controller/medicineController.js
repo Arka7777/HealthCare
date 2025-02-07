@@ -58,7 +58,7 @@ export const medicinelogin = async (req, res) => {
         success: false,
       });
     }
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, medicine.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
         message: "Incorrect email or password",
@@ -68,7 +68,7 @@ export const medicinelogin = async (req, res) => {
 
    
     const tokenData = {
-      userId: user._id,
+      medicineId: medicine._id,
     };
 
     const token = await jwt.sign(tokenData, process.env.JWT_SECRET, {

@@ -1,6 +1,7 @@
 import {Doctor} from "../model/doctorModel.js"
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import mongoose from "mongoose";
 export const drregister = async (req, res) => {
   try {
     const{name,email,password,phoneNumber,specialization,licenceNumber,address,currentyWorkingIn}=req.body;
@@ -58,7 +59,7 @@ export const login = async (req, res) => {
         success: false,
       });
     }
-    const isPasswordMatch = await bcrypt.compare(password, user.password);
+    const isPasswordMatch = await bcrypt.compare(password, dr.password);
     if (!isPasswordMatch) {
       return res.status(400).json({
         message: "Incorrect email or password",
@@ -68,7 +69,7 @@ export const login = async (req, res) => {
 
    
     const tokenData = {
-      userId: user._id,
+      drId: dr._id,
     };
 
     const token = await jwt.sign(tokenData, process.env.JWT_SECRET, {
@@ -172,6 +173,13 @@ export const getAllDoctors = async (req, res) => {
 
 export const getDoctorById = async (req, res) => {
   try {
+    const {id}=req.params;
+    if(mongoose.Types.ObjectId.isValid(id)){
+      return res.status(400).json({
+        message:"invalid",
+        success:false
+      })
+    }
       const dr = await Doctor.findById(req.params.id);
       if (!dr) {
           return res.status(404).json({

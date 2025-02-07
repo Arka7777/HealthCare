@@ -2,6 +2,9 @@ import express from "express";
 import 'dotenv/config'
 import mongoose from "mongoose";
 import userRoute from './routes/userRoute.js'
+import clinicRoute from './routes/clinicRoute.js'
+import doctorRoute from './routes/doctorRoute.js'
+import medicineRoute from './routes/medicineRoute.js'
 
 
 
@@ -23,7 +26,9 @@ mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
 
 //routes
 // app.use('/api/v1/user',userRoute)
-
+app.use('/api/v1/clinic',clinicRoute)
+app.use('/api/v1/doctor',doctorRoute)
+app.use('/api/v1/medicineShop',medicineRoute)
 
 app.listen(port,()=>{
     console.log(`server is running at : http://localhost:${port}`)
