@@ -7,6 +7,8 @@ import Find_Doctors from "./FindDoctors/Find_Doctors"
 import About_us from "./Home_components/About_us.jsx"
 import Search_Medicines from "./Home_components/Search_Medicines"
 import HowItWorks from "./Home_components/How_it_works"
+import ClinicListPage from "./Clinic/ClinicListPage"
+import ClinicPage from "./Clinic/ClinicPage.jsx"
 import OurImpacts from "./Home_components/Our_impacts.jsx"
 import Blog from "./Home_components/Blog.jsx"
 
@@ -62,6 +64,33 @@ export default function App() {
         <>
           <Navbar />
           <Search_Medicines />
+        </>
+      ),
+    },
+    {
+      path: "/discover-clinics",
+      element: (
+        <>
+          <Navbar />
+          <ClinicListPage />
+        </>
+      ),
+    },
+    {
+      path: "/discover-clinics",
+      element: (
+        <>
+          <Navbar />
+          <ClinicListPage />
+        </>
+      ),
+    },
+    {
+      path: "/clinic-page",
+      element: (
+        <>
+          <Navbar />
+          <ClinicPage />
         </>
       ),
     },
