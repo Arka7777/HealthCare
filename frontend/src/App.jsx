@@ -2,18 +2,19 @@ import { createBrowserRouter, RouterProvider, Navigate, useNavigate } from "reac
 import Navbar from "./Home_components/Navbar"
 import Hero from "./Home_components/HeroSection/Hero"
 import Feature from "./Home_components/Feature"
+import ContactUs from "./Home_components/Contact_us"
 import Find_Doctors from "./FindDoctors/Find_Doctors"
 
 
 
 
 export default function App() {
-  
-  
 
-  
 
-  
+
+
+
+
   const router = createBrowserRouter([
     {
       path: "/",
@@ -22,6 +23,15 @@ export default function App() {
           <Navbar />
           <Hero />
           <Feature />
+        </>
+      ),
+    },
+    {
+      path: "/contact_us",
+      element: (
+        <>
+          <Navbar />
+          <ContactUs />
         </>
       ),
     },
@@ -36,9 +46,6 @@ export default function App() {
         
       ),
     },
-
-    
-    
   ])
 
   return <RouterProvider router={router} />
