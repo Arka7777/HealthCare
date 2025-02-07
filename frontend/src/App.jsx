@@ -51,6 +51,8 @@ export default function App() {
           <Navbar />
           <About_us />
         </>
+      )
+    },{
       path: "/search-medicines",
       element: (
         <>
