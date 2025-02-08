@@ -1,11 +1,10 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { Search } from "lucide-react"
-import { DoctorCard } from "./DoctorCard"
-import doctors from "./DoctorsData" // Import doctors data
+import { useState, useEffect } from "react";
+import { Search, Mic, MicOff } from "lucide-react";
+import { DoctorCard } from "./DoctorCard";
+import doctors from "./DoctorsData"; // Import doctors data
 
-// Custom Input component
 const Input = ({ id, type, placeholder, value, onChange, className, ...props }) => (
   <input
     id={id}
@@ -16,9 +15,8 @@ const Input = ({ id, type, placeholder, value, onChange, className, ...props }) 
     className={`w-full px-3 py-2 text-gray-700 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${className}`}
     {...props}
   />
-)
+);
 
-// Custom Select component
 const Select = ({ id, value, onChange, children, className, ...props }) => (
   <div className="relative">
     <select
@@ -40,9 +38,8 @@ const Select = ({ id, value, onChange, children, className, ...props }) => (
       </svg>
     </div>
   </div>
-)
+);
 
-// Custom Label component
 const Label = ({ htmlFor, children, className, ...props }) => (
   <label htmlFor={htmlFor} className={`block text-sm font-medium text-gray-700 mb-1 ${className}`} {...props}>
     {children}
@@ -53,7 +50,7 @@ const Label = ({ htmlFor, children, className, ...props }) => (
 function calculateDistance(lat1, lon1, lat2, lon2) {
   const R = 6371 // Radius of the Earth in km
   const dLat = (lat2 - lat1) * (Math.PI / 180)
-  const dLon = (lon2 - lon1) * (Math.PI / 180)
+  const dLon = (lat2 - lon1) * (Math.PI / 180)
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
@@ -62,7 +59,9 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 export default function DoctorsList() {
-  const [searchTerm, setSearchTerm] = useState("")
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isListening, setIsListening] = useState(false);
+  const [selectedLanguage, setSelectedLanguage] = useState("en-US");
   const [sortBy, setSortBy] = useState("rating")
   const [specialization, setSpecialization] = useState("All")
   const [userLocation, setUserLocation] = useState(null)
@@ -70,6 +69,46 @@ export default function DoctorsList() {
   const [selectedDay, setSelectedDay] = useState("All")
   const [selectedDate, setSelectedDate] = useState("")
   const [selectedTime, setSelectedTime] = useState("")
+
+  let recognition;
+
+  // Check if browser supports Speech Recognition
+  if (typeof window !== "undefined" && "webkitSpeechRecognition" in window) {
+    recognition = new window.webkitSpeechRecognition();
+    recognition.continuous = false;
+    recognition.interimResults = false;
+    recognition.lang = selectedLanguage;
+
+    recognition.onresult = (event) => {
+      let transcript = event.results[0][0].transcript.trim();
+      if (transcript.endsWith(".")) {
+        transcript = transcript.slice(0, -1);
+      }
+      setSearchTerm(transcript); // Update search term with spoken words
+      setIsListening(false);
+    };
+
+    recognition.onerror = (event) => {
+      console.error("Speech Recognition Error:", event.error);
+      setIsListening(false);
+    };
+
+    recognition.onend = () => {
+      setIsListening(false);
+    };
+  }
+
+  // Start or stop voice recognition
+  const toggleListening = () => {
+    if (isListening) {
+      recognition.stop();
+      setIsListening(false);
+    } else {
+      recognition.lang = selectedLanguage;
+      recognition.start();
+      setIsListening(true);
+    }
+  };
 
   // Get unique specializations from doctors data
   const specializations = ["All", ...new Set(doctors.map((doctor) => doctor.specialization))]
@@ -175,9 +214,11 @@ export default function DoctorsList() {
         <h1 className="text-4xl font-bold mb-8 text-blue-900">Find Your Doctor</h1>
         <div className="bg-white p-6 rounded-lg shadow-md mb-8">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            
+            {/* Search with Voice Input */}
             <div className="space-y-2">
               <Label htmlFor="search">Search</Label>
-              <div className="relative">
+              <div className="relative flex items-center">
                 <Search className="absolute left-2 top-1/2 transform -translate-y-1/2 text-gray-500" />
                 <Input
                   id="search"
@@ -185,10 +226,34 @@ export default function DoctorsList() {
                   placeholder="Search doctors by name"
                   value={searchTerm}
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8"
+                  className="pl-8 pr-10"
                 />
+                <button
+                  type="button"
+                  onClick={toggleListening}
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white p-2 rounded-full shadow-md focus:outline-none"
+                >
+                  {isListening ? <MicOff size={18} /> : <Mic size={18} />}
+                </button>
               </div>
             </div>
+
+            {/* Language Selection */}
+            <div className="space-y-2">
+              <Label htmlFor="language">Language</Label>
+              <Select
+                id="language"
+                value={selectedLanguage}
+                onChange={(e) => setSelectedLanguage(e.target.value)}
+              >
+                <option value="en-US">English</option>
+                <option value="hi-IN">Hindi</option>
+                <option value="bn-IN">Bengali</option>
+                <option value="es-ES">Spanish</option>
+                <option value="fr-FR">French</option>
+              </Select>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="specialization">Specialization</Label>
               <Select id="specialization" value={specialization} onChange={(e) => setSpecialization(e.target.value)}>
@@ -233,5 +298,5 @@ export default function DoctorsList() {
         </div>
       </div>
     </div>
-  )
+  );
 }
