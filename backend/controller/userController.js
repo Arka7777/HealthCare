@@ -11,7 +11,7 @@ export const register = async (req, res) => {
     console.log(req.body)
     try {
         // const chalk = await import('chalk');
-        const { username, email, password, address, gender, age } = req.body
+        const { username, email, phoneNumber,password, address, gender, age } = req.body
 
 
         //check for existing user
@@ -29,12 +29,12 @@ export const register = async (req, res) => {
         const hashedPass = await bcrypt.hash(String(password), salt)
 
 
-        const newUser = await new User({
+        const newUser = await new  User({
             name: username,
             email,
             password: hashedPass,
+            phoneNumber,
             gender,
-            age,
             address,
         })
         try {
