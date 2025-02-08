@@ -8,7 +8,7 @@ const MedicineSalesForecasting = () => {
   return (
     <div className="px-6 sm:px-12 md:px-20 lg:px-40 xl:px-60 py-10">
       <h1 className="text-center font-bold text-3xl md:text-4xl lg:text-5xl text-blue-800">
-        Medicine Sales Forecasting
+        Medicine Forecasting
       </h1>
 
       <div className="grid md:grid-cols-2 gap-10 mt-10 border-2 px-8 py-8 rounded-md border-black bg-slate-200 relative">
