@@ -56,25 +56,6 @@ def predict():
     # Return the prediction
     return jsonify({"predicted_sales": predicted_sales[0]})
 
-@app.route("/predictMedi/", methods=["POST"])
-def predictMedi():
-    # Get data from the request
-    data = request.json
-    print(data)
-    
-    # Encode categorical variables
-    encoded_features = encoder1.transform([[data["previous_prescriptions"], data["symptoms"],data["allergies"],data["common_side_effect"]]])
-
-    # Prepare input data
-
-    # Concatenate numerical and encoded categorical features
-    input_data = encoded_features
-
-    # Make prediction
-    predicted_medicine = model1.predict(input_data)
-
-    # Return the prediction
-    return jsonify({"predicted_medicine": predicted_medicine[0]})
 @app.route("/predictDoctor/", methods=["POST"])
 def predictDoc():
     # Get data from the request
@@ -96,6 +77,28 @@ def predictDoc():
 
     # Return the prediction
     return jsonify({"predicted_doctors": predicted_doctors[0]})
+
+
+@app.route("/predictMedi/", methods=["POST"])
+def predictMedi():
+    # Get data from the request
+    data = request.json
+    print(data)
+    
+    # Encode categorical variables
+    encoded_features = encoder1.transform([[data["previous_prescriptions"], data["symptoms"],data["allergies"],data["common_side_effect"]]])
+
+    # Prepare input data
+
+    # Concatenate numerical and encoded categorical features
+    input_data = encoded_features
+
+    # Make prediction
+    predicted_medicine = model1.predict(input_data)
+
+    # Return the prediction
+    return jsonify({"predicted_medicine": predicted_medicine[0]})
+
 
 
 if __name__ == "__main__":

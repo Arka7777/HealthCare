@@ -1,47 +1,93 @@
-// DoctorPrediction.js
-import React, { useState } from 'react';
-import axios from 'axios';
-import { FaUserMd, FaHeartbeat, FaCalendarCheck, FaClock } from 'react-icons/fa';
+import React, { useState } from "react";
+import {
+  FaUserMd,
+  FaHeartbeat,
+  FaCalendarCheck,
+  FaClock,
+} from "react-icons/fa";
 
 const DoctorPrediction = () => {
-  const [doctorSpecialization, setDoctorSpecialization] = useState('');
-  const [symptoms, setSymptoms] = useState('');
-  const [patientAge, setPatientAge] = useState('');
-  const [previousAppointments, setPreviousAppointments] = useState('');
-  const [recommendedDoctor, setRecommendedDoctor] = useState('');
+  const [doctorSpecialization, setDoctorSpecialization] = useState("");
+  const [symptoms, setSymptoms] = useState("");
+  const [patientAge, setPatientAge] = useState("");
+  const [previousAppointments, setPreviousAppointments] = useState("");
+  const [recommendedDoctor, setRecommendedDoctor] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleDoctorPrediction = async () => {
     setLoading(true);
+    setRecommendedDoctor(""); // Clear previous result
+
     try {
-      const response = await axios.post('http://localhost:5000/predictDoctor', {
-        doctor_specialization: doctorSpecialization,
-        symptoms: symptoms,
-        patient_age: patientAge,
-        previous_appointments: previousAppointments,
+      const response = await fetch("http://localhost:5000/predictDoctor/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          doctor_specialization: doctorSpecialization,
+          symptoms: symptoms,
+          patient_age: patientAge,
+          previous_appointments: previousAppointments,
+        }),
       });
-      setRecommendedDoctor(response.data.predicted_doctor);
+
+      const data = await response.json();
+      console.log("Response from backend:", data); // Debugging
+
+      if (data.predicted_doctors) {
+        setRecommendedDoctor(data.predicted_doctors);
+      } else {
+        setRecommendedDoctor("No recommendation available.");
+      }
     } catch (error) {
-      console.error('Error predicting doctor:', error);
+      console.error("Error predicting doctor:", error);
+      setRecommendedDoctor("Failed to fetch recommendation.");
     }
+
     setLoading(false);
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-green-500 to-green-700 flex justify-center items-center p-4">
       <div className="bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-2xl shadow-xl w-full max-w-lg border border-white border-opacity-30">
-        <h1 className="text-3xl font-bold text-white text-center mb-6">🩺 Doctor Prediction</h1>
+        <h1 className="text-3xl font-bold text-white text-center mb-6">
+          🩺 Doctor Prediction
+        </h1>
 
         <div className="space-y-6">
           {/* Input Fields */}
           {[
-            { label: 'Doctor Specialization', icon: <FaUserMd />, state: doctorSpecialization, setter: setDoctorSpecialization },
-            { label: 'Symptoms', icon: <FaHeartbeat />, state: symptoms, setter: setSymptoms },
-            { label: 'Patient Age', icon: <FaCalendarCheck />, state: patientAge, setter: setPatientAge, type: 'number' },
-            { label: 'Previous Appointments', icon: <FaClock />, state: previousAppointments, setter: setPreviousAppointments }
-          ].map(({ label, icon, state, setter, type = 'text' }, index) => (
+            {
+              label: "Doctor Specialization",
+              icon: <FaUserMd />,
+              state: doctorSpecialization,
+              setter: setDoctorSpecialization,
+            },
+            {
+              label: "Symptoms",
+              icon: <FaHeartbeat />,
+              state: symptoms,
+              setter: setSymptoms,
+            },
+            {
+              label: "Patient Age",
+              icon: <FaCalendarCheck />,
+              state: patientAge,
+              setter: setPatientAge,
+              type: "number",
+            },
+            {
+              label: "Previous Appointments",
+              icon: <FaClock />,
+              state: previousAppointments,
+              setter: setPreviousAppointments,
+            },
+          ].map(({ label, icon, state, setter, type = "text" }, index) => (
             <div key={index} className="relative">
-              <span className="absolute left-3 top-3 text-white text-lg">{icon}</span>
+              <span className="absolute left-3 top-3 text-white text-lg">
+                {icon}
+              </span>
               <input
                 type={type}
                 placeholder={label}
@@ -58,8 +104,8 @@ const DoctorPrediction = () => {
             disabled={loading}
             className={`w-full py-3 rounded-lg text-lg font-semibold transition-all duration-300 ${
               loading
-                ? 'bg-green-300 cursor-not-allowed text-gray-100'
-                : 'bg-green-500 hover:bg-green-600 text-white shadow-lg transform hover:scale-105'
+                ? "bg-green-300 cursor-not-allowed text-gray-100"
+                : "bg-green-500 hover:bg-green-600 text-white shadow-lg transform hover:scale-105"
             }`}
           >
             {loading ? (
@@ -70,20 +116,34 @@ const DoctorPrediction = () => {
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
                 >
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
+                  <circle
+                    className="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    strokeWidth="4"
+                  ></circle>
+                  <path
+                    className="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8v8H4z"
+                  ></path>
                 </svg>
                 Processing...
               </span>
             ) : (
-              'Predict Doctor'
+              "Predict Doctor"
             )}
           </button>
 
           {/* Display Prediction Result */}
           {recommendedDoctor && (
             <div className="mt-4 p-4 bg-white bg-opacity-20 text-white text-lg font-semibold text-center rounded-lg shadow-md">
-              Recommended Doctor: <span className="font-bold text-yellow-300">{recommendedDoctor}</span>
+              Recommended Doctor:{" "}
+              <span className="font-bold text-yellow-300">
+                {recommendedDoctor}
+              </span>
             </div>
           )}
         </div>
