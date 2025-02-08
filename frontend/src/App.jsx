@@ -16,9 +16,9 @@ import Mental_health from "./Blog_article_components/Mental_health"
 import AuthPage from "./AuthPage/AuthPage"
 import ClinicListPage from "./Clinic/ClinicListPage"
 import ClinicPage from "./Clinic/ClinicPage"
+import RateClinicPage from "./Clinic/RateClinicPage.jsx"
 import UserProfile from "./Profile/UserProfile"
 import Contact_us from "./Home_components/Contact_us"
-import ClinicAdminDashboard from "./AdminPanels/ClinicAdminPanel/ClinicAdminPanel"
 import { useEffect, useState } from "react"
 import axios from "axios"
 import { useContext } from "react";
@@ -27,6 +27,7 @@ import Edit from "./Profile/Edit"
 import { useSelector ,useDispatch} from "react-redux";
 // import store from "../redux/store";
 import { setUser } from "./redux/authslice"
+import clinicData from "./Clinic/ClinicData"
 
 
 const ProtectedRoute = ({ children }) => {
@@ -185,7 +186,7 @@ export default function App() {
       ),
     },
     {
-      path: "/discover-clinics",
+      path: "/search-medicines",
       element: (
         <ProtectedRoute>
           <Navbar />
@@ -202,8 +203,45 @@ export default function App() {
         </ProtectedRoute>
       ),
     },
-    {
+       {
       path: "/winter",
+      element: (
+        <>
+          <Navbar />
+          <Winter />
+        </>
+      ),
+    },
+    {
+      path: "/five",
+      element: (
+        <ProtectedRoute>
+          <Navbar />
+          <Five />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/insurance",
+      element: (
+        <ProtectedRoute>
+          <Navbar />
+          <Insurance />
+        </ProtectedRoute>
+      ),
+    },
+    {
+      path: "/mental_health",
+      element: (
+        <>
+          <Navbar />
+          <Mental_health />
+        </>
+      ),
+    },
+    
+    {
+      path: "/clinic/:id",
       element: (
         <>
           <Navbar />
@@ -220,24 +258,6 @@ export default function App() {
         </>
       ),
     },
-    {
-      path: "/insurance",
-      element: (
-        <>
-          <Navbar />
-          <Insurance />
-        </>
-      ),
-    },
-    {
-      path: "/mental_health",
-      element: (
-        <>
-          <Navbar />
-          <Mental_health />
-        </>
-      ),
-    },
 
     {
       path: "/UserProfile/Edit",
@@ -248,17 +268,18 @@ export default function App() {
         </>
       ),
     },
+    
     //Admin Panels
     //Clinic Admin Panel
-    {
-      path: "/ClinicAdminDashboard",
-      element: (
-        <>
-          <Navbar />
-          <ClinicAdminDashboard />
-        </>
-      ),
-    },
+    // {
+    //   path: "/ClinicAdminDashboard",
+    //   element: (
+    //     <>
+    //       <Navbar />
+    //       <ClinicAdminDashboard />
+    //     </>
+    //   ),
+    // },
   ])
 
   return <RouterProvider router={router} />
