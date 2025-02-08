@@ -212,10 +212,15 @@ const SignUpForm = ({ userType }) => {
       }
 
       const response = await axios.post(
-        `${USER_API_END_POINT}/signup`,
+        '/api//signup',
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
+     console.log(payload)
+      toast.success("Signup successful!", {
+        position: "top-right",
+        autoClose: 3000,
+      });
 
     //   toast.success("Signup successful!", {
     //     position: "top-right",

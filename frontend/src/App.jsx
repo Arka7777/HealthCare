@@ -196,12 +196,12 @@ export default function App() {
       ),
     },
     {
-      path: "/search-medicines",
+      path: "/discover-clinics",
       element: (
-        <ProtectedRoute>
+        <>
           <Navbar />
           <ClinicListPage />
-        </ProtectedRoute>
+          </>
       ),
     },
     {
@@ -255,7 +255,16 @@ export default function App() {
       element: (
         <>
           <Navbar />
-          <Winter />
+          <ClinicPage clinic={clinicData}/>
+        </>
+      ),
+    },
+      {
+      path: "/rate-clinic/:id",
+      element: (
+        <>
+          <Navbar />
+          <RateClinicPage clinic={clinicData}/>
         </>
       ),
     },
