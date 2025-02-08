@@ -1,0 +1,6 @@
+patient_id,previous_prescriptions,symptoms,recommended_medicine,allergies,common_side_effects
+201,Paracetamol,Fever,Acetaminophen,None,"Drowsiness, Nausea"
+202,Ibuprofen,Pain,Diclofenac,Penicillin,"Stomach Pain, Dizziness"
+203,Aspirin,Inflammation,Naproxen,NSAIDs,"Acid Reflux, Headache"
+204,Metformin,Diabetes,Glipizide,None,"Low Blood Pressure, Fatigue"
+205,Sertraline,Depression,Fluoxetine,None,"Drowsiness, Dry Mouth"

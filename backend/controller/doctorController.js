@@ -214,3 +214,17 @@ export const drdelete=async (req,res)=>{
   }
 }
 
+
+export const getRecommendedDoctor = async (req, res) => {
+  try {
+    const { userId, symptoms, previousDoctor } = req.body;
+    const response = await axios.post("http://127.0.0.1:5001/predict", {
+      user_id: userId,
+      symptoms: symptoms,
+      previous_doctor: previousDoctor
+    });
+    res.json(response.data);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching recommendation" });
+  }
+};

@@ -32,18 +32,18 @@ def predict_sales(day, month, year, medicine_name, stock_available, supplier_lea
     return predicted_sales[0]
 
 # Test the model with sample input
-# predicted_value = predict_sales(
-#     day=7,
-#     month=4,
-#     year=2024,
-#     medicine_name="Ibuprofen",
-#     stock_available=708,
-#     supplier_lead_time=8,
-#     seasonal_demand="Yes",
-#     hospital_orders=1,
-#     price_per_unit=19.47,
-#     discount_applied=5,
-#     competitor_price=11.47
-# )
+predicted_value = predict_sales(
+    day=7,
+    month=4,
+    year=2024,
+    medicine_name="Ibuprofen",
+    stock_available=708,
+    supplier_lead_time=8,
+    seasonal_demand="Yes",
+    hospital_orders=1,
+    price_per_unit=19.47,
+    discount_applied=5,
+    competitor_price=11.47
+)
 
-# print(f"📈 Predicted sales units: {predicted_value:.2f}")
+print(f"📈 Predicted sales units: {predicted_value:.2f}")

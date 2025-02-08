@@ -29,6 +29,8 @@ const doctorSchema=new mongoose.Schema({
     type:String,
     required:true
   },
+  location: String,
+  ratings: Number
 
 })
 export const Doctor=mongoose.model("doctor",doctorSchema)

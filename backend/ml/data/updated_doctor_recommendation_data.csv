@@ -1,0 +1,6 @@
+patient_id,previous_appointments,symptoms,recommended_doctor,patient_age,doctor_specialization
+101,Dr. Smith,Headache,Dr. Allen,25,Neurologist
+102,Dr. Doe,Fever,Dr. Baker,34,General Physician
+103,Dr. Brown,Back Pain,Dr. Clarke,45,Orthopedic
+104,Dr. Green,Chest Pain,Dr. Davis,50,Cardiologist
+105,Dr. White,Anxiety,Dr. Evans,29,Psychiatrist

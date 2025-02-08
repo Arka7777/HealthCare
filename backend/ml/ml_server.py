@@ -3,9 +3,11 @@ from pydantic import BaseModel
 import pickle
 import numpy as np
 import datetime
+from fastapi.middleware.cors import CORSMiddleware
+from sklearn.preprocessing import OneHotEncoder
 
 # Load the trained model
-model_filename = "./ml/model.pkl"
+model_filename = "./test_model/model.pkl"
 
 try:
     with open(model_filename, "rb") as file:
@@ -18,7 +20,24 @@ except FileNotFoundError:
     exit()
 
 # Initialize FastAPI
+
+
 app = FastAPI()
+
+
+origins = [
+    "http://localhost:5174",  # Example: React Frontend
+    "http://127.0.0.1:3000",
+    "https://yourfrontend.com",  # Add your frontend domain here
+]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,  # Allows only specified origins
+    allow_credentials=True,
+    allow_methods=["*"],  # Allows all HTTP methods
+    allow_headers=["*"],  # Allows all headers
+)
 
 # Define request model
 class InputData(BaseModel):
@@ -33,8 +52,10 @@ class InputData(BaseModel):
     competitor_price: float
 
 # Prediction function
+@app.post("/predict/")
 def predict_sales(input_data: InputData):
     # Extract day, month, and year from date
+    print(input_data)
     date_obj = datetime.datetime.strptime(input_data.date, "%Y-%m-%d")
     day, month, year = date_obj.day, date_obj.month, date_obj.year
 
@@ -56,7 +77,7 @@ def predict_sales(input_data: InputData):
     return {"predicted_sales_units": float(predicted_sales[0])}
 
 # API endpoint for prediction
-@app.post("/predict/")
-def get_prediction(data: InputData):
-    prediction = predict_sales(data)
-    return prediction
+
+# def get_prediction(data: InputData):
+#     prediction = predict_sales(data)
+#     return prediction

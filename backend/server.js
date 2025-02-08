@@ -12,6 +12,8 @@ import { authMiddle } from './middlewares/authMiddleware.js'
 import authRoute from './routes/authRoutes.js'
 import bookRoute from './routes/appointmentRoute.js'
 import { connectDB } from './utils/db.js'
+// import { sales_predictor } from './predict.js'
+import predictionRoutes from './routes/predictionRoute.js'
 
 const app = express()
 
@@ -39,6 +41,8 @@ app.get('/', (req, res) => {
 app.use("/api/v1/user", userRoute);
 app.use("/api/v1/doctor", doctorRoute);
 app.use("/api/v1/book", bookRoute);
+// app.use('/predict/medicineFore',sales_predictor)
+app.use('/api/predict', predictionRoutes);
 
 // Auth : 
 app.use("/api/v1/getUser",authMiddle,authRoute)
