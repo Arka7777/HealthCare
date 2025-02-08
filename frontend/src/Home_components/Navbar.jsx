@@ -72,7 +72,7 @@ export default function Navbar() {
             <NavLink to="/med_sale_ForeCasting">Forecasting</NavLink>
 
 
-            {false?<NavLink to="/userProfile" mobile>Profile</NavLink>:
+            {isAuth?<NavLink to="/userProfile" mobile>Profile</NavLink>:
             <div className="px-4 py-3 border-t border-blue-600">
               <Button>Login</Button>
             </div>}
