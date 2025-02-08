@@ -12,12 +12,7 @@ import { authMiddle } from './middlewares/authMiddleware.js'
 import authRoute from './routes/authRoutes.js'
 import bookRoute from './routes/appointmentRoute.js'
 import { connectDB } from './utils/db.js'
-<<<<<<< HEAD
-// import { sales_predictor } from './predict.js'
-import predictionRoutes from './routes/predictionRoute.js'
-=======
-// import chalk from 'chalk'
->>>>>>> 07ab2ecec1a5934f4a2e71d885a017aa51d8573b
+import clinicRoute from './routes/clinicRoute.js'
 
 const app = express()
 
@@ -46,10 +41,11 @@ app.use("/api/v1/user", userRoute);
 app.use("/api/v1/doctor", doctorRoute);
 app.use("/api/v1/book", bookRoute);
 // app.use('/predict/medicineFore',sales_predictor)
-app.use('/api/predict', predictionRoutes);
+// app.use('/api/predict', predictionRoutes);
 
 // Auth : 
 app.use("/api/v1/getUser",authMiddle,authRoute)
+app.use('/api/v1/clinics',authMiddle,clinicRoute)
 
 
 app.listen(port, () => {
