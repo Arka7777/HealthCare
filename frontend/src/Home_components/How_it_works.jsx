@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+
 export default function HowItWorks() {
   return (
     <section className="bg-gray-100 py-12 sm:py-16" id="how-it-works">
@@ -91,7 +92,7 @@ export default function HowItWorks() {
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-800 mb-3">
-                Book Appointment
+                <a href="/discover-clinics">Book Appointment</a>
               </h3>
               <p className="text-gray-600">
                 Once you've selected your service or doctor, easily book an

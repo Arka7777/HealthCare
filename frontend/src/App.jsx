@@ -8,7 +8,8 @@ import Blog from "./Home_components/Blog"
 import Footer from "./Home_components/Footer"
 import About_us from "./Home_components/About_us"
 import Find_Doctors from "./FindDoctors/Find_Doctors"
-import Search_Medicines from "./Home_components/Search_Medicines"
+// import Search_Medicines from "./Home_components/Search_Medicines"
+import SearchPage from "./medicine/pages/SearchPage.jsx"
 import Winter from "./Blog_article_components/Winter"
 import { Five } from "./Blog_article_components/Five"
 import Insurance from "./Blog_article_components/Insurance"
@@ -293,19 +294,19 @@ export default function App() {
     {
       path:"/medirecom",
       element:(
-        <>
+        <ProtectedRoute>
         <Navbar/>
         <MedicinePrediction/>
-        </>
+        </ProtectedRoute>
       )
     },
     {
       path:"/drrecom",
       element:(
-        <>
+        <ProtectedRoute>
         <Navbar/>
         <DoctorPrediction/>
-        </>
+        </ProtectedRoute>
       )
     },
     
