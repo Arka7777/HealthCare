@@ -294,19 +294,19 @@ export default function App() {
     {
       path:"/medirecom",
       element:(
-        <>
+        <ProtectedRoute>
         <Navbar/>
         <MedicinePrediction/>
-        </>
+        </ProtectedRoute>
       )
     },
     {
       path:"/drrecom",
       element:(
-        <>
+        <ProtectedRoute>
         <Navbar/>
         <DoctorPrediction/>
-        </>
+        </ProtectedRoute>
       )
     },
     

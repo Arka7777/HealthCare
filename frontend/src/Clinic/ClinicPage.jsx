@@ -3,6 +3,8 @@
 import { useLocation } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { MapPin, Phone, Clock, Calendar, Star } from "lucide-react"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import clinics from "./ClinicData"
 import { Link } from "react-router-dom"
 
@@ -23,7 +25,6 @@ export default function ClinicPage() {
     let clinicFromLocation = location.state?.clinic
   
     if (!clinicFromLocation) {
-      // Extract the clinic ID from the URL path
       const clinicId = location.pathname.split("/").pop()
       clinicFromLocation = clinics.find((c) => c.id.toString() === clinicId)
     }
@@ -62,6 +63,19 @@ export default function ClinicPage() {
       default:
         return true
     }
+  }
+
+  function handleBooking() {
+    toast.success("Booking Successful", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    })
   }
 
   return (
@@ -117,25 +131,6 @@ export default function ClinicPage() {
               </p>
             </div>
           </div>
-
-          <div className="bg-white p-6 rounded-lg shadow-lg">
-            <h3 className="text-xl font-bold text-blue-600 mb-4">Location Map</h3>
-            <a
-              href={`https://www.google.com/maps?q=${clinic.lat},${clinic.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <iframe
-                src={`https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${clinic.lat},${clinic.lng}`}
-                width="100%"
-                height="250"
-                className="rounded-md"
-                allowFullScreen
-                loading="lazy"
-                title="Google Map Location"
-              ></iframe>
-            </a>
-          </div>
         </section>
 
         <section id="filters" className="bg-white p-6 rounded-lg shadow-lg">
@@ -165,18 +160,6 @@ export default function ClinicPage() {
                 </option>
               ))}
             </select>
-            <select
-              value={filters.time}
-              onChange={(e) => setFilters({ ...filters, time: e.target.value })}
-              className="border rounded-lg p-2"
-            >
-              <option value="">All Times</option>
-              {times.map((time, index) => (
-                <option key={index} value={time}>
-                  {time}
-                </option>
-              ))}
-            </select>
           </div>
         </section>
 
@@ -187,15 +170,10 @@ export default function ClinicPage() {
               <div key={index} className="bg-white p-5 rounded-lg shadow-lg">
                 <h3 className="text-lg font-bold text-blue-600 mb-2">{doctor.name}</h3>
                 <p className="text-gray-600 text-base mb-2">{doctor.specialty}</p>
-                <p className="flex items-center gap-2 text-gray-600 text-sm">
-                  <Calendar className="text-blue-600" size={16} />
-                  <span>{doctor.availableDays.join(", ")}</span>
-                </p>
-                <p className="flex items-center gap-2 text-gray-600 text-sm mb-4">
-                  <Clock className="text-blue-600" size={16} />
-                  <span>{doctor.availableTime}</span>
-                </p>
-                <button className="w-full bg-blue-600 text-white px-4 py-2 text-sm rounded-full hover:bg-blue-700 transition">
+                <button
+                  className="w-full bg-blue-600 text-white px-4 py-2 text-sm rounded-full hover:bg-blue-700 transition"
+                  onClick={handleBooking}
+                >
                   Book Appointment
                 </button>
               </div>
