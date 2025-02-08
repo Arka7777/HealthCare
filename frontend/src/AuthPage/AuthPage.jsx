@@ -8,10 +8,6 @@ import { AuthContext } from "./AuthContext";
 import { USER_API_END_POINT } from "../../utils/constant"
 import { setUser } from "../redux/authslice"
 import { useDispatch } from "react-redux"
-<<<<<<< HEAD
-=======
-
->>>>>>> dfeb33dc9d8df5169d71f41226aff4c7cfd73545
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [currentTab, setCurrentTab] = useState("user")
@@ -220,7 +216,7 @@ const SignUpForm = ({ userType }) => {
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
-
+     console.log(payload)
       toast.success("Signup successful!", {
         position: "top-right",
         autoClose: 3000,
