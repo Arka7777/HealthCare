@@ -1,9 +1,10 @@
 import express from "express";
-import { User } from "../model/userModel.js";
+import  User  from "../model/userModel.js";
 
 const router = express.Router()
 
 router.post('/signup',async(req,res)=>{
+   console.log(req.body)
       try {
          const {name , phoneNumber , password ,address,gender} = req.body
          const user = await User.findOne({name:name})
@@ -19,7 +20,7 @@ router.post('/signup',async(req,res)=>{
          })
 
          try {
-            await newUser.save();
+            // await newUser.save();
             console.log('User saved');
             res.status(200).json({
                 message: "User save hoye geche",

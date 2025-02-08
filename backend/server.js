@@ -1,35 +1,50 @@
-import express from "express";
+// imports
+import express, { Router } from 'express'
+import chalk from 'chalk'
 import 'dotenv/config'
-import mongoose from "mongoose";
+import bodyParser from 'body-parser'
+import cors from 'cors'
+import mongoose from 'mongoose'
 import userRoute from './routes/userRoute.js'
-import clinicRoute from './routes/clinicRoute.js'
-import doctorRoute from './routes/doctorRoute.js'
-import medicineRoute from './routes/medicineRoute.js'
-
-
+import doctorRoute from'./routes/doctorRoute.js'
+import bcrypt from 'bcrypt'
+import { authMiddle } from './middlewares/authMiddleware.js'
+import authRoute from './routes/authRoutes.js'
+import bookRoute from './routes/appointmentRoute.js'
+import { connectDB } from './utils/db.js'
 
 const app = express()
-const port = process.env.PORT || 3000
-const uri = process.env.URI
-// console.log("here is the uri",uri)
 
 
+//middlewares
+app.use(express.urlencoded({ extended: true, limit: '10mb' }))
+app.use(bodyParser.json());
 app.use(express.json())
-app.get('/',(req,res)=>{
-    res.send("All is well")
-})
 
-//mongodb
-mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => { console.log('Connected to the database') })
-    .catch(err => { console.log('Database error powered by Aru...', err) })
+//dotenv
+const port = process.env.PORT || 5001
+
+
+//mongoose
+connectDB()
+
+//cors
+app.use(cors())
 
 //routes
-// app.use('/api/v1/user',userRoute)
-app.use('/api/v1/clinic',clinicRoute)
-app.use('/api/v1/doctor',doctorRoute)
-app.use('/api/v1/medicineShop',medicineRoute)
+app.get('/', (req, res) => {
+    res.send('hoye geche')
+    console.log(process.env.NAME)
+})
+app.use("/api/v1/user", userRoute);
+app.use("/api/v1/doctor", doctorRoute);
+app.use("/api/v1/book", bookRoute);
 
-app.listen(port,()=>{
-    console.log(`server is running at : http://localhost:${port}`)
+// Auth : 
+app.use("/api/v1/getUser",authMiddle,authRoute)
+
+
+app.listen(port, () => {
+    const url = chalk.magenta.underline(`http://localhost:${port}`)
+    console.log(`Backend is running at : `, url)
 })
