@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 function SalesPredictionForm() {
   const [formData, setFormData] = useState({
     day: 0,
-    month:0,
+    month: 0,
     year: 0,
-    medicine_name: '',
+    medicine_name: "",
     stock_available: 0,
     supplier_lead_time: 0,
-    seasonal_demand: '',
+    seasonal_demand: "",
     hospital_orders: 0,
     price_per_unit: 0,
     discount_applied: 0,
@@ -30,24 +30,28 @@ function SalesPredictionForm() {
 
     try {
       // Sending data to backend at localhost:5000/predict
-      const response = await fetch('http://localhost:5000/predict/', {
-        method: 'POST',
+      const response = await fetch("http://localhost:5000/predict/", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(formData),
       });
-   console.log(response)
-   
+
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.detail || `HTTP error! status: ${response.status}`);
+        throw new Error(
+          errorData.detail || `HTTP error! status: ${response.status}`
+        );
       }
 
       const data = await response.json();
-      setPrediction(data.predicted_sales_units); // Save the predicted sales units
+      console.log(data); // To check the full response
+
+      // Directly setting the predicted sales from the response
+      setPrediction(data.predicted_sales);
     } catch (err) {
-      console.error('Error fetching prediction:', err);
+      console.error("Error fetching prediction:", err);
       setError(err.message);
     }
   };
@@ -56,29 +60,13 @@ function SalesPredictionForm() {
     <div className="container mx-auto p-4">
       <h1 className="text-3xl font-bold mb-4">Sales Prediction</h1>
       <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Date input */}
-        {/* <div>
-          <label htmlFor="date" className="block text-gray-700 font-bold mb-2">
-            Date:
-          </label>
-          <input
-            type="date"
-            id="date"
-            name="date"
-            value={formData.date}
-            onChange={handleChange}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div> */}
-
-        {/* Medicine Name input */}
+        {/* Day input */}
         <div>
           <label htmlFor="day" className="block text-gray-700 font-bold mb-2">
             Day:
           </label>
           <input
-            type="Number"
+            type="number"
             id="day"
             name="day"
             value={formData.day}
@@ -87,12 +75,14 @@ function SalesPredictionForm() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
+
+        {/* Month input */}
         <div>
           <label htmlFor="month" className="block text-gray-700 font-bold mb-2">
-            month:
+            Month:
           </label>
           <input
-            type="Number"
+            type="number"
             id="month"
             name="month"
             value={formData.month}
@@ -101,12 +91,14 @@ function SalesPredictionForm() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
+
+        {/* Year input */}
         <div>
-          <label htmlFor="day" className="block text-gray-700 font-bold mb-2">
-            year:
+          <label htmlFor="year" className="block text-gray-700 font-bold mb-2">
+            Year:
           </label>
           <input
-            type="Number"
+            type="number"
             id="year"
             name="year"
             value={formData.year}
@@ -115,8 +107,13 @@ function SalesPredictionForm() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
+
+        {/* Medicine Name input */}
         <div>
-          <label htmlFor="medicine_name" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="medicine_name"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Medicine Name:
           </label>
           <input
@@ -132,7 +129,10 @@ function SalesPredictionForm() {
 
         {/* Stock Available input */}
         <div>
-          <label htmlFor="stock_available" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="stock_available"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Stock Available:
           </label>
           <input
@@ -148,7 +148,10 @@ function SalesPredictionForm() {
 
         {/* Supplier Lead Time input */}
         <div>
-          <label htmlFor="supplier_lead_time" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="supplier_lead_time"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Supplier Lead Time:
           </label>
           <input
@@ -161,12 +164,17 @@ function SalesPredictionForm() {
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
         </div>
+
+        {/* Seasonal Demand input */}
         <div>
-          <label htmlFor="supplier_lead_time" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="seasonal_demand"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Seasonal Demand:
           </label>
           <input
-            type="String"
+            type="text"
             id="seasonal_demand"
             name="seasonal_demand"
             value={formData.seasonal_demand}
@@ -176,27 +184,12 @@ function SalesPredictionForm() {
           />
         </div>
 
-        {/* Seasonal Demand input */}
-        {/* <div>
-          <label htmlFor="seasonal_demand" className="block text-gray-700 font-bold mb-2">
-            Seasonal Demand:
-          </label>
-          <select
-            id="seasonal_demand"
-            name="seasonal_demand"
-            value={formData.seasonal_demand}
-            onChange={handleChange}
-            required
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          >
-            <option value="Yes">Yes</option>
-            <option value="No">No</option>
-          </select>
-        </div> */}
-
         {/* Hospital Orders input */}
         <div>
-          <label htmlFor="hospital_orders" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="hospital_orders"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Hospital Orders:
           </label>
           <input
@@ -212,7 +205,10 @@ function SalesPredictionForm() {
 
         {/* Price per Unit input */}
         <div>
-          <label htmlFor="price_per_unit" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="price_per_unit"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Price per Unit:
           </label>
           <input
@@ -228,7 +224,10 @@ function SalesPredictionForm() {
 
         {/* Discount Applied input */}
         <div>
-          <label htmlFor="discount_applied" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="discount_applied"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Discount Applied:
           </label>
           <input
@@ -244,7 +243,10 @@ function SalesPredictionForm() {
 
         {/* Competitor Price input */}
         <div>
-          <label htmlFor="competitor_price" className="block text-gray-700 font-bold mb-2">
+          <label
+            htmlFor="competitor_price"
+            className="block text-gray-700 font-bold mb-2"
+          >
             Competitor Price:
           </label>
           <input
@@ -267,15 +269,15 @@ function SalesPredictionForm() {
         </button>
       </form>
 
-      {/* Display any errors
+      {/* Display any errors */}
       {error && <p className="text-red-500 mt-2">Error: {error}</p>}
-      
+
       {/* Display prediction result */}
-      {/* {prediction !== null && (
+      {prediction !== null && (
         <p className="mt-4 text-lg">
-          Predicted Sales Units: <span className="font-bold">{prediction.toFixed(2)}</span>
+          Predicted Sales: <span className="font-bold">{prediction}</span> units
         </p>
-      // )} */} 
+      )}
     </div>
   );
 }
