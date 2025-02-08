@@ -160,7 +160,7 @@ export const updateProfile = async (req, res) => {
 export const getAllClinics = async (req, res) => {
   try {
       const clinic = await Clinic.find();
-      res.status(200).json({
+      return res.status(200).json({
         clinic,
         success:true
       });
