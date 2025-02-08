@@ -41,6 +41,7 @@ export default function Navbar() {
             <NavLink to="/">Home</NavLink>
             <NavLink to="/about">About Us</NavLink>
             <NavLink to="/contact_us">Contact Us</NavLink>
+            <NavLink to="/med_sale_ForeCasting">Forecasting</NavLink>
             {isAuth?<NavLink to="/userProfile">Profile</NavLink>:
            <div className="hidden md:flex items-center ml-8">
             <Button>Login</Button>
@@ -68,6 +69,8 @@ export default function Navbar() {
             <NavLink to="/" mobile>Home</NavLink>
             <NavLink to="/about" mobile>About Us</NavLink>
             <NavLink to="/contact_us" mobile>Contact Us</NavLink>
+            <NavLink to="/med_sale_ForeCasting">Forecasting</NavLink>
+
 
             {false?<NavLink to="/userProfile" mobile>Profile</NavLink>:
             <div className="px-4 py-3 border-t border-blue-600">
