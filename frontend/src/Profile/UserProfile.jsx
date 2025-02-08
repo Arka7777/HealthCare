@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { IoCameraOutline } from "react-icons/io5";
 import { RxAvatar } from "react-icons/rx";
 import { IoIosCall } from "react-icons/io";
@@ -6,42 +6,39 @@ import { MdOutlineMail } from "react-icons/md";
 import { CiLocationOn } from "react-icons/ci";
 import { FaCity } from "react-icons/fa";
 import { FaRegBookmark } from "react-icons/fa6";
-import { useContext } from "react";
-import { AuthContext } from "../AuthPage/AuthContext";
-
-import { useState ,useEffect} from "react";
-import { useRef } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaRegEdit } from "react-icons/fa";
-import Edit from "../Profile/Edit"
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../AuthPage/AuthContext";
+import Edit from "../Profile/Edit";
 import store from "../redux/store";
 
-
 const UserProfile = () => {
-  const {user}=useSelector(store=>store.auth)
-  const{bookings,setUser,setAuth}=useContext(AuthContext)
+  const { user } = useSelector((store) => store.auth);
+  const { bookings, setUser, setAuth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
-  useEffect(() => {
-        
-      console.log("edited successfully")
-    }, [user]);
+  const navigate = useNavigate();
   const fileInputRef = useRef(null);
-  const [Image, setImage] = useState(
-    "https://th.bing.com/th/id/OIP.GKAbRpYzDlJa139WC8xPtwHaIC?w=158&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
+  
+  // Load saved profile image from localStorage
+  const [profileImage, setProfileImage] = useState(
+    localStorage.getItem("profileImage") ||
+      "https://th.bing.com/th/id/OIP.GKAbRpYzDlJa139WC8xPtwHaIC?w=158&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7"
   );
 
+  // Update the image when changed
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        localStorage.setItem("profileImage", reader.result); // Save to localStorage
+        setProfileImage(reader.result);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
-  const navigate = useNavigate();
-  // const { user, bookings, setUser, setAuth } = useContext(AuthContext);
-  
   const logOut = () => {
     localStorage.removeItem("token");
     setAuth(false);
@@ -53,15 +50,15 @@ const UserProfile = () => {
     <div className="pb-12">
       <div className="flex justify-end px-6 mt-6" onClick={logOut}>
         <a
-          href=""
+          href="#"
           className="bg-blue-500 text-white rounded-lg px-4 py-2 hover:bg-red-600 transition"
         >
           Log Out
         </a>
       </div>
 
-      <div className="sec1 flex flex-col md:flex-row items-center text-center px-6 md:px-[150px] py-6 gap-12 md:gap-32  ">
-        <div className="w-full md:w-auto md:p-[10px] md:shadow-xl md:hover:shadow-2xl">
+      <div className="sec1 flex flex-col md:flex-row items-center text-center px-6 md:px-[150px] py-6 gap-12 md:gap-32">
+        <div className="w-full md:w-auto md:p-[10px] l">
           <p className="text-3xl md:text-4xl font-semibold text-blue-400">
             Welcome to your Profile,
           </p>
@@ -71,11 +68,8 @@ const UserProfile = () => {
         </div>
 
         <div className="relative w-[140px] h-[140px] md:w-[270px] md:h-[270px] mt-[-20px] md:mt-10 mx-auto rounded-full bg-blue-400 overflow-hidden shadow-md md:shadow-xl flex items-center justify-center">
-          <img
-            className="h-full w-full object-cover"
-            src={Image}
-            alt="Profile"
-          />
+          <img className="h-full w-full object-cover" src={profileImage} alt="Profile" />
+
           <input
             type="file"
             accept="image/*"
@@ -93,7 +87,7 @@ const UserProfile = () => {
         </div>
       </div>
 
-      <div className="sec2  md:mt-[30px] px-4 md:px-24 flex flex-col md:flex-row gap-6">
+      <div className="sec2 md:mt-[30px] px-4 md:px-24 flex flex-col md:flex-row gap-6">
         <div className="w-full md:w-1/2">
           <div className="text-2xl md:text-3xl font-bold text-center text-white bg-gradient-to-r from-blue-300 to-blue-600 rounded-lg p-2">
             Details
@@ -125,17 +119,11 @@ const UserProfile = () => {
               <p>{user?.address}</p>
             </div>
 
-{/* edit option */}
-            {/* <a
-              href="/UserProfile/Edit"
-              className="mt-4 text-2xl inline-block  px-4 py-2 rounded-lg hover:text-red-700 transition"
+            <button
+              className="mt-4 text-2xl inline-block px-4 py-2 rounded-lg hover:text-red-500 transition"
+              onClick={() => setOpen(true)}
             >
-              
               <FaRegEdit />
-            </a> */}
-
-            <button className="mt-4 text-2xl inline-block  px-4 py-2 rounded-lg hover:text-red-500 transition" onClick={()=>setOpen(true)}>
-              <FaRegEdit/>
             </button>
           </div>
         </div>
@@ -149,7 +137,7 @@ const UserProfile = () => {
             {bookings &&
               bookings.map((booking, index) => (
                 <div
-                  key={index} // ✅ Add a unique key
+                  key={index}
                   className="book1 flex justify-between items-center px-4 py-2 border border-black rounded-md hover:text-blue-700 transition cursor-pointer"
                 >
                   <div className="flex items-center gap-3 font-semibold">
@@ -161,22 +149,6 @@ const UserProfile = () => {
                   <p className="font-semibold">{booking.date?.split("T")[0]}</p>
                 </div>
               ))}
-
-            {/* <div className=" book2 flex justify-between items-center px-4 py-2 border border-black rounded-md hover:text-blue-700 transition cursor-pointer">
-          <div className="flex items-center gap-3 font-semibold">
-            <FaRegBookmark className="text-lg" />
-            <a href="/manage-appointments"><i>Dr. Raj Aryan</i></a>
-          </div>
-          <p className="font-semibold">08/02/2025</p>
-        </div>
-
-        <div className="book3 flex justify-between items-center px-4 py-2 border border-black rounded-md hover:text-blue-700 transition cursor-pointer">
-          <div className="flex items-center gap-3 font-semibold">
-            <FaRegBookmark className="text-lg" />
-            <a href="/manage-appointments"><i>Dr. Arka Biswas</i></a>
-          </div>
-          <p className="font-semibold">09/02/2025</p>
-        </div> */}
           </div>
         </div>
       </div>
