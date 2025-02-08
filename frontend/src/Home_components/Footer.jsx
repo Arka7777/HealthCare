@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 export default function Footer() {
   return (
     <>
@@ -10,13 +11,13 @@ export default function Footer() {
           </p>
 
           <div className="flex justify-center space-x-8 mb-4">
-            <a href="#privacy" className="text-gray-400 hover:text-white">
+            <a href="https://docs.google.com/document/d/1FR0fW2Kq2qBrW-cRxB06wX9ls-UEMf0Cp2MiOcj_uiE/edit?usp=sharing" className="text-gray-400 hover:text-white">
               Privacy Policy
             </a>
-            <a href="#terms" className="text-gray-400 hover:text-white">
+            <a href="https://www.websitepolicies.com/blog/sample-terms-conditions-template" className="text-gray-400 hover:text-white">
               Terms of Service
             </a>
-            <a href="#contact" className="text-gray-400 hover:text-white">
+            <a href="/contact_us" className="text-gray-400 hover:text-white">
               Contact Us
             </a>
           </div>

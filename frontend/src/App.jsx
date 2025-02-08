@@ -148,10 +148,10 @@ export default function App() {
     {
       path: "/about",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           {isAuth ? <About_us /> : <AuthPage />}
-        </>
+        </ProtectedRoute>
       ),
     },
     {
@@ -166,10 +166,10 @@ export default function App() {
     {
       path: "/med_sale_ForeCasting",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           <MedicineSalesForecasting />
-          </>
+          </ProtectedRoute>
       ),
     },
     {
@@ -193,19 +193,19 @@ export default function App() {
     {
       path: "/search-medicines",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           <SearchPage />
-        </>
+        </ProtectedRoute>
       ),
     },
     {
       path: "/discover-clinics",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           <ClinicListPage />
-          </>
+          </ProtectedRoute>
       ),
     },
     {
@@ -229,19 +229,19 @@ export default function App() {
     {
       path: "/five",
       element: (
-        <ProtectedRoute>
+        <>
           <Navbar />
           <Five />
-        </ProtectedRoute>
+        </>
       ),
     },
     {
       path: "/insurance",
       element: (
-        <ProtectedRoute>
+        <>
           <Navbar />
           <Insurance />
-        </ProtectedRoute>
+        </>
       ),
     },
     {
