@@ -11,7 +11,6 @@ export default function RateClinicPage() {
   const [clinic, setClinic] = useState(null)
   const [rating, setRating] = useState(0)
   const [hover, setHover] = useState(0)
-  const [review, setReview] = useState("")
 
   useEffect(() => {
     const foundClinic = clinics.find((c) => c.id === Number.parseInt(id))
@@ -22,16 +21,12 @@ export default function RateClinicPage() {
     }
   }, [id, navigate])
 
-  const handleSubmit = async () => {
-    if (rating === 0) {
-      alert("Please select a rating before submitting.")
-      return
-    }
-    
-    // Here you would typically send this rating and review to your backend
-    alert(`You rated ${clinic.name} ${rating} stars!\nReview: ${review}`)
-    
-    // After submission, navigate back to the clinic page
+  const handleRating = async (rate) => {
+    setRating(rate)
+    // Here you would typically send this rating to your backend
+    // For now, we'll just show an alert
+    alert(`You rated ${clinic.name} ${rate} stars!`)
+    // After rating, navigate back to the clinic page
     navigate(`/clinic/${id}`)
   }
 
@@ -44,17 +39,15 @@ export default function RateClinicPage() {
       <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
         <h1 className="text-2xl font-bold text-blue-600 mb-4">Rate {clinic.name}</h1>
         <p className="text-gray-600 mb-6">How would you rate your experience at {clinic.name}?</p>
-        
-        {/* Star Rating */}
         <div className="flex justify-center mb-6">
-          {[...Array(5)].map((_, index) => {
+          {[...Array(5)].map((star, index) => {
             index += 1
             return (
               <button
                 type="button"
                 key={index}
                 className={`${index <= (hover || rating) ? "text-yellow-400" : "text-gray-300"} text-3xl`}
-                onClick={() => setRating(index)}
+                onClick={() => handleRating(index)}
                 onMouseEnter={() => setHover(index)}
                 onMouseLeave={() => setHover(rating)}
               >
@@ -63,23 +56,9 @@ export default function RateClinicPage() {
             )
           })}
         </div>
-        
-        {/* Review Input */}
-        <textarea
-          className="w-full p-2 border border-gray-300 rounded-md mb-4"
-          rows="4"
-          placeholder="Write your review here..."
-          value={review}
-          onChange={(e) => setReview(e.target.value)}
-        ></textarea>
-        
-        {/* Submit Button */}
-        <button
-          className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700"
-          onClick={handleSubmit}
-        >
-          Submit Review
-        </button>
+        <p className="text-center text-gray-600">
+          {rating ? `You rated this clinic ${rating} stars` : "Click on a star to rate"}
+        </p>
       </div>
     </div>
   )
