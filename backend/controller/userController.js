@@ -1,6 +1,6 @@
 import chalk from 'chalk'
 import mongoose from 'mongoose'
-import User from '../models/User.js'
+import User from '../model/userModel.js'
 import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import 'dotenv/config'

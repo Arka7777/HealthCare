@@ -5,10 +5,9 @@ import { useNavigate } from "react-router-dom"
 import { toast } from "react-toastify"
 import { useContext } from "react";
 import { AuthContext } from "./AuthContext";
-import { USER_API_END_POINT } from "../../utils/constant"
+import { USER_API_END_POINT } from "../../utils/constant.js"
 import { setUser } from "../redux/authslice"
 import { useDispatch } from "react-redux"
-
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true)
   const [currentTab, setCurrentTab] = useState("user")
@@ -174,7 +173,7 @@ const SignUpForm = ({ userType }) => {
   const navigate = useNavigate();
 
   // Input fields
-  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -192,7 +191,7 @@ const SignUpForm = ({ userType }) => {
 
     try {
       const payload = {
-        username,
+        name,
         email,
         password,
         address,
@@ -218,12 +217,12 @@ const SignUpForm = ({ userType }) => {
         { headers: { "Content-Type": "application/json" } }
       );
 
-      toast.success("Signup successful!", {
-        position: "top-right",
-        autoClose: 3000,
-      });
+    //   toast.success("Signup successful!", {
+    //     position: "top-right",
+    //     autoClose: 3000,
+    //   });
 
-      navigate("/");
+    //   navigate("/");
     } catch (err) {
       const errorMsg = err.response?.data?.message || "Signup failed!";
       toast.error(errorMsg, {
@@ -241,8 +240,8 @@ const SignUpForm = ({ userType }) => {
           id="name"
           placeholder="Enter your name"
           required
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          value={name}
+          onChange={(e) => setName(e.target.value)}
           className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
