@@ -49,4 +49,4 @@ def predict_doctor(request: DoctorRecommendationRequest):
     except Exception as e:
         return {"error": str(e)}
 
-# Run FastAPI using: uvicorn dr_predict:app --reload
+
