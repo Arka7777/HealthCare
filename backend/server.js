@@ -12,6 +12,7 @@ import { authMiddle } from './middlewares/authMiddleware.js'
 import authRoute from './routes/authRoutes.js'
 import bookRoute from './routes/appointmentRoute.js'
 import { connectDB } from './utils/db.js'
+// import chalk from 'chalk'
 
 const app = express()
 

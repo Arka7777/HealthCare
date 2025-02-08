@@ -173,7 +173,7 @@ const SignUpForm = ({ userType }) => {
   const navigate = useNavigate();
 
   // Input fields
-  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
@@ -191,7 +191,7 @@ const SignUpForm = ({ userType }) => {
 
     try {
       const payload = {
-        name,
+        username,
         email,
         password,
         address,
@@ -212,11 +212,12 @@ const SignUpForm = ({ userType }) => {
       }
 
       const response = await axios.post(
-        '/api//signup',
+        `http://localhost:8000/api/v1/user/signup`,
         payload,
         { headers: { "Content-Type": "application/json" } }
       );
      console.log(payload)
+     navigate('/')
       toast.success("Signup successful!", {
         position: "top-right",
         autoClose: 3000,
@@ -245,8 +246,8 @@ const SignUpForm = ({ userType }) => {
           id="name"
           placeholder="Enter your name"
           required
-          value={name}
-          onChange={(e) => setName(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
           className="w-full px-3 py-2 border border-blue-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </div>
