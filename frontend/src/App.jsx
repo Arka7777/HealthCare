@@ -8,7 +8,8 @@ import Blog from "./Home_components/Blog"
 import Footer from "./Home_components/Footer"
 import About_us from "./Home_components/About_us"
 import Find_Doctors from "./FindDoctors/Find_Doctors"
-import Search_Medicines from "./Home_components/Search_Medicines"
+//import Search_Medicines from "./Home_components/Search_Medicines"
+import SearchPage from "./medicine/pages/SearchPage";
 import Winter from "./Blog_article_components/Winter"
 import { Five } from "./Blog_article_components/Five"
 import Insurance from "./Blog_article_components/Insurance"
@@ -189,10 +190,10 @@ export default function App() {
     {
       path: "/search-medicines",
       element: (
-        <ProtectedRoute>
+        <>
           <Navbar />
-          <Search_Medicines />
-        </ProtectedRoute>
+          <SearchPage />
+        </>
       ),
     },
     {
