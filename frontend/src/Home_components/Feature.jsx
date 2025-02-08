@@ -20,6 +20,24 @@ export default function Feature() {
       description: "Browse clinics, view schedules, and get directions with a click.",
       link: "/discover-clinics",
     },
+    {
+      icon: "📊",
+      title: "Forecasting",
+      description: "Predict future medicine demands and optimize inventory management.",
+      link: "/med_sale_ForeCasting",
+    },
+    {
+      icon: "🔬",
+      title: "Medicine Prediction",
+      description: "Get AI-powered medicine recommendations based on symptoms and history.",
+      link: "/medirecom",
+    },
+    {
+      icon: "🩺",
+      title: "Doctor Prediction",
+      description: "Find the best doctor based on symptoms, history, and AI analysis.",
+      link: "/drrecom",
+    },
   ]
 
   return (
@@ -39,14 +57,14 @@ export default function Feature() {
             <Link
               to={feature.link}
               key={index}
-              className="bg-white p-4 sm:p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center"
+              className="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300 flex flex-col items-center border border-gray-200 hover:border-blue-500"
             >
               {/* Icon */}
-              <div className="text-4xl sm:text-5xl text-blue-600 mb-3 sm:mb-4">{feature.icon}</div>
+              <div className="text-5xl text-blue-600 mb-4">{feature.icon}</div>
               {/* Title */}
-              <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
+              <h3 className="text-xl font-semibold text-gray-800 mb-2">{feature.title}</h3>
               {/* Description */}
-              <p className="text-sm sm:text-base text-gray-600">{feature.description}</p>
+              <p className="text-base text-gray-600 text-center">{feature.description}</p>
             </Link>
           ))}
         </div>
