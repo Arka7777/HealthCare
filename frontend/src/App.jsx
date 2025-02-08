@@ -29,6 +29,9 @@ import { useSelector ,useDispatch} from "react-redux";
 import { setUser } from "./redux/authslice"
 import clinicData from "./Clinic/ClinicData"
 import MedicineSalesForecasting from "./Home_components/MedicineSalesForecasting.jsx"
+// import Recomendation from "./Home_components/Recomendation.jsx"
+import MedicinePrediction from "./Home_components/MedicinePrediction.jsx"
+import DoctorPrediction from "./Home_components/DoctorPrediction.jsx"
 
 
 const ProtectedRoute = ({ children }) => {
@@ -287,6 +290,25 @@ export default function App() {
         </>
       ),
     },
+    {
+      path:"/medirecom",
+      element:(
+        <>
+        <Navbar/>
+        <MedicinePrediction/>
+        </>
+      )
+    },
+    {
+      path:"/drrecom",
+      element:(
+        <>
+        <Navbar/>
+        <DoctorPrediction/>
+        </>
+      )
+    },
+    
     
     //Admin Panels
     //Clinic Admin Panel
