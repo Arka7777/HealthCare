@@ -12,8 +12,12 @@ import { authMiddle } from './middlewares/authMiddleware.js'
 import authRoute from './routes/authRoutes.js'
 import bookRoute from './routes/appointmentRoute.js'
 import { connectDB } from './utils/db.js'
+<<<<<<< HEAD
 // import { sales_predictor } from './predict.js'
 import predictionRoutes from './routes/predictionRoute.js'
+=======
+// import chalk from 'chalk'
+>>>>>>> 07ab2ecec1a5934f4a2e71d885a017aa51d8573b
 
 const app = express()
 
