@@ -36,12 +36,15 @@ import DoctorPrediction from "./Home_components/DoctorPrediction.jsx"
 
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuth, setIsAuth } = useContext(AuthContext)
-  if (!isAuth) {
-    return <Navigate to="/login" replace />
+  const { isAuth } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
+
+  if (!isAuth && !token) {
+    return <Navigate to="/login" replace />;
   }
-  return <>{children}</>
-}
+
+  return <>{children}</>;
+};
 
 export default function App() {
   // const navigate = useNavigate()
@@ -132,7 +135,7 @@ export default function App() {
       element: (
         <>
           <Navbar />
-          {isAuth?<UserProfile/>:<AuthPage />}
+          {localStorage.getItem("token") ? <UserProfile /> : <AuthPage />}
         </>
       ),
     },
