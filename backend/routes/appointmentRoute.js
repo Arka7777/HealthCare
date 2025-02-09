@@ -7,7 +7,7 @@ import { authMiddle } from "../middlewares/authMiddleware.js"
 const router = express.Router()
 
 
-router.post('/book', authMiddle,bookAppo)
+router.post('/',bookAppo)
 router.post('/getBookings/:name',authMiddle,getBookings)
 
 

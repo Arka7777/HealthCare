@@ -18,7 +18,21 @@ export default function ClinicPage() {
     day: "",
     time: "",
   })
-
+  var lat , lon
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+             lat = position.coords.latitude;
+             lon = position.coords.longitude;
+            console.log(`Latitude: ${lat}, Longitude: ${lon}`);
+        },
+        (error) => {
+            console.error('Error getting location:', error);
+        }
+    );
+} else {
+    console.log('Geolocation is not supported by this browser.');
+}
   useEffect(() => {
     let clinicFromLocation = location.state?.clinic
   
@@ -126,7 +140,7 @@ export default function ClinicPage() {
               rel="noopener noreferrer"
             >
               <iframe
-                src={`https://www.google.com/maps/embed/v1/place?key=YOUR_GOOGLE_MAPS_API_KEY&q=${clinic.lat},${clinic.lng}`}
+                src={`https://maps.google.com/maps/embed/v1/directions?origin=${lat},${lon}&destination=${clinic.lat},${clinic.lng}&key=AIzaSyD76crtro2WCvfYZqzcyKGfavtO-cwqURc`}
                 width="100%"
                 height="250"
                 className="rounded-md"

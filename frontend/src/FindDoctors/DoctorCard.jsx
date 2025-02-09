@@ -1,43 +1,52 @@
-import { useState } from "react"
-import { Star, Calendar, ChevronDown, ChevronUp, MapPin } from "lucide-react"
+import { useState, useContext } from "react";
+import { Star, Calendar, ChevronDown, ChevronUp, MapPin } from "lucide-react";
+import axios from "axios";
+import { AuthContext } from "../AuthPage/AuthContext";
 
-
-const Button = ({ children, onClick, className, ...props }) => (
+const Button = ({ children, onClick, className, disabled, ...props }) => (
   <button
     onClick={onClick}
-    className={`px-4 py-2 font-semibold text-sm bg-blue-500 text-white rounded-lg shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50 ${className}`}
+    disabled={disabled}
+    className={`px-4 py-2 font-semibold text-sm rounded-lg shadow-sm focus:outline-none focus:ring-2 ${
+      disabled
+        ? "bg-gray-400 text-gray-200 cursor-not-allowed"
+        : "bg-blue-500 text-white hover:bg-blue-600 focus:ring-blue-500"
+    } ${className}`}
     {...props}
   >
     {children}
   </button>
-)
+);
 
 export function DoctorCard({ doctor, userLocation }) {
-  const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false)
+  const [isAvailabilityOpen, setIsAvailabilityOpen] = useState(false);
+  const [bookedSlots, setBookedSlots] = useState({}); // Track booked slots
 
-  const handleBooking = (day, slot) => {
-    alert(`Booking appointment with ${doctor.name} on ${day} at ${slot.time} in ${slot.clinic}`)
-  }
+  const { user } = useContext(AuthContext);
+  const client = axios.create({ baseURL: "/api" });
 
-  const getNextOccurrence = (day) => {
-    const daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
-    const today = new Date()
-    const targetDay = daysOfWeek.indexOf(day)
-    const daysUntilTarget = (targetDay + 7 - today.getDay()) % 7
-    const nextOccurrence = new Date(today.getTime() + daysUntilTarget * 24 * 60 * 60 * 1000)
-    return nextOccurrence.toLocaleDateString("en-US", { month: "long", day: "numeric", year: "numeric" })
-  }
+  const handleBooking = async (day, slot) => {
+    try {
+      const response = await client.post("/api/v1/book", {
+        name: user.name,
+        phoneNumber: user.phoneNumber,
+        drName: doctor.name,
+        clinicName: slot.clinic,
+      });
+      console.log(response);
+      
+      // Store booked slot in state
+      setBookedSlots((prev) => ({
+        ...prev,
+        [`${day}-${slot.time}-${slot.clinic}`]: true,
+      }));
 
-  const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371 
-    const dLat = (lat2 - lat1) * (Math.PI / 180)
-    const dLon = (lon2 - lon1) * (Math.PI / 180)
-    const a =
-      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * Math.sin(dLon / 2) * Math.sin(dLon / 2)
-    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a))
-    return R * c 
-  }
+      alert(`Booking appointment with ${doctor.name} on ${day} at ${slot.time} in ${slot.clinic}`);
+    } catch (error) {
+      console.error("Booking failed:", error);
+      alert("Booking failed. Please try again.");
+    }
+  };
 
   return (
     <div className="bg-white rounded-lg shadow-md overflow-hidden border border-gray-200 w-full mb-6">
@@ -52,61 +61,56 @@ export function DoctorCard({ doctor, userLocation }) {
             <span className="ml-1 text-gray-600 font-semibold">{doctor.rating.toFixed(1)}</span>
           </div>
         </div>
-<Button
-  onClick={() => setIsAvailabilityOpen(!isAvailabilityOpen)}
-  className="w-full flex justify-between items-center mt-2"
-  aria-expanded={isAvailabilityOpen}
-  aria-controls={`schedule-${doctor.id}`}
->
-  <span className="flex items-center">
-    <Calendar className="w-4 h-4 mr-2" />
-    {isAvailabilityOpen ? "Hide" : "View"} Availability
-  </span>
-  <span>
-    {isAvailabilityOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
-  </span>
-</Button>
-
+        <Button
+          onClick={() => setIsAvailabilityOpen(!isAvailabilityOpen)}
+          className="w-full flex justify-between items-center mt-2"
+          aria-expanded={isAvailabilityOpen}
+          aria-controls={`schedule-${doctor.id}`}
+        >
+          <span className="flex items-center">
+            <Calendar className="w-4 h-4 mr-2" />
+            {isAvailabilityOpen ? "Hide" : "View"} Availability
+          </span>
+          <span>{isAvailabilityOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}</span>
+        </Button>
       </div>
       {isAvailabilityOpen && (
         <div id={`schedule-${doctor.id}`} className="bg-gray-50 p-4 border-t border-gray-200">
           <h3 className="font-semibold text-blue-900 mb-4">Weekly Schedule:</h3>
           {Object.entries(doctor.availability).map(([day, slots]) => (
             <div key={day} className="mb-4">
-              <h4 className="font-medium text-blue-800 mb-2">
-                {day} - {getNextOccurrence(day)}
-              </h4>
+              <h4 className="font-medium text-blue-800 mb-2">{day}</h4>
               <ul className="space-y-2">
-                {slots.map((slot, index) => (
-                  <li key={index} className="flex items-center justify-between bg-white p-2 rounded shadow-sm">
-                    <div>
-                      <span className="text-sm font-medium text-blue-700">
-                        {slot.clinic}: {slot.time}
-                      </span>
-                      {userLocation && (
-                        <div className="text-xs text-gray-500 flex items-center mt-1">
-                          <MapPin className="w-3 h-3 mr-1" />
-                          {calculateDistance(
-                            userLocation.lat,
-                            userLocation.lon,
-                            slot.location.lat,
-                            slot.location.lon,
-                          ).toFixed(1)}{" "}
-                          km away
-                        </div>
-                      )}
-                    </div>
-                    <Button onClick={() => handleBooking(day, slot)} className="text-xs px-2 py-1">
-                      Book Now
-                    </Button>
-                  </li>
-                ))}
+                {slots.map((slot, index) => {
+                  const slotKey = `${day}-${slot.time}-${slot.clinic}`;
+                  return (
+                    <li key={index} className="flex items-center justify-between bg-white p-2 rounded shadow-sm">
+                      <div>
+                        <span className="text-sm font-medium text-blue-700">
+                          {slot.clinic}: {slot.time}
+                        </span>
+                        {userLocation && (
+                          <div className="text-xs text-gray-500 flex items-center mt-1">
+                            <MapPin className="w-3 h-3 mr-1" />
+                            {/* Distance calculation here */}
+                          </div>
+                        )}
+                      </div>
+                      <Button
+                        onClick={() => handleBooking(day, slot)}
+                        disabled={bookedSlots[slotKey]} // Disable button if booked
+                        className="text-xs px-2 py-1"
+                      >
+                        {bookedSlots[slotKey] ? "Booked" : "Book Now"}
+                      </Button>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}
         </div>
       )}
     </div>
-  )
+  );
 }
-

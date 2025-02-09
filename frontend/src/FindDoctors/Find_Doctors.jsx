@@ -4,6 +4,10 @@ import { useState, useEffect } from "react";
 import { Search, Mic, MicOff } from "lucide-react";
 import { DoctorCard } from "./DoctorCard";
 import doctors from "./DoctorsData"; // Import doctors data
+import axios from "axios"
+
+
+
 
 const Input = ({ id, type, placeholder, value, onChange, className, ...props }) => (
   <input
@@ -59,6 +63,29 @@ function calculateDistance(lat1, lon1, lat2, lon2) {
 }
 
 export default function DoctorsList() {
+  const [doctors,setDoctors] = useState([])
+
+  const client = axios.create({
+    baseURL: "/api",
+  })
+
+  const getDoctors = async () => {
+    try {
+    
+      const response = await client.get('/api/v1/doctor/get')
+
+      console.log(response.data.dr)
+      setDoctors(response.data.dr)
+      // setIsAuth(true)
+    } catch (error) {
+      console.log("doctors fetching error :", error)
+      // setIsAuth(false)
+    }
+
+  }
+  useEffect(() => {
+    getDoctors()
+  }, [])
   const [searchTerm, setSearchTerm] = useState("");
   const [isListening, setIsListening] = useState(false);
   const [selectedLanguage, setSelectedLanguage] = useState("en-US");
