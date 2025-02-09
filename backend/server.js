@@ -46,7 +46,7 @@ app.use("/api/v1/book", bookRoute);
 
 // Auth : 
 app.use("/api/v1/getUser",authMiddle,authRoute)
-app.use('/api/v1/clinics',authMiddle,clinicRoute)
+// app.use('/api/v1/clinics',authMiddle,clinicRoute)
 
 
 app.listen(port, () => {
