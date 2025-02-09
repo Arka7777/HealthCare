@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { FiMail, FiUser, FiMessageCircle, FiSend } from "react-icons/fi";
 
 export default function ContactUs() {
   const [formData, setFormData] = useState({
@@ -6,7 +7,7 @@ export default function ContactUs() {
     email: "",
     message: "",
   });
-  const [status, setStatus] = useState(""); 
+  const [status, setStatus] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -18,9 +19,8 @@ export default function ContactUs() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formData = new FormData(e.target);
 
-    const form = e.target;
-    const formData = new FormData(form);
     try {
       const response = await fetch("https://formspree.io/f/xgvokopo", {
         method: "POST",
@@ -28,100 +28,84 @@ export default function ContactUs() {
       });
 
       if (response.ok) {
-        setStatus("Message sent successfully!");
-        setFormData({ name: "", email: "", message: "" }); 
+        setStatus("✅ Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
       } else {
-        setStatus("Error sending message. Please try again.");
+        setStatus("❌ Error sending message. Please try again.");
       }
     } catch (error) {
-      setStatus("An error occurred. Please try again later.");
+      setStatus("⚠️ An error occurred. Please try again later.");
     }
   };
 
   return (
-    <section className="py-16 bg-gray-100" id="contact-us">
-      <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
+    <section className="py-16 bg-gradient-to-br from-blue-500 via-purple-500 to-pink-500 flex justify-center items-center min-h-screen px-4">
+      <div className="w-full max-w-lg bg-white bg-opacity-20 backdrop-blur-lg p-8 rounded-2xl shadow-xl text-white">
+        <h2 className="text-3xl font-bold text-center drop-shadow-lg mb-4">
           Contact Us
         </h2>
-        <p className="text-lg text-center text-gray-600 mb-8">
-          Have any questions? Reach out to us and we'll be happy to assist you.
+        <p className="text-center text-lg text-white/80 mb-6">
+          Have any questions? Reach out to us, and we'll be happy to assist you.
         </p>
 
-        <form
-          onSubmit={handleSubmit}
-          method="POST"
-          className="max-w-md mx-auto bg-white p-8 rounded-lg shadow-lg"
-        >
-          <div className="space-y-4">
-            <div>
-              <label
-                htmlFor="name"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Your Name
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                placeholder="John Doe"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Your Email
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                placeholder="john@example.com"
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              />
-            </div>
-
-            <div>
-              <label
-                htmlFor="message"
-                className="block text-sm font-medium text-gray-700 mb-1"
-              >
-                Your Message
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                placeholder="How can we help you?"
-                rows={4}
-                required
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-              ></textarea>
-            </div>
-
-            <button
-              type="submit"
-              className="w-full py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-            >
-              Send Message
-            </button>
+        <form onSubmit={handleSubmit} method="POST" className="space-y-5">
+          {/* Name Input */}
+          <div className="relative">
+            <FiUser className="absolute left-4 top-3 text-white/70" />
+            <input
+              type="text"
+              name="name"
+              value={formData.name}
+              onChange={handleChange}
+              placeholder="Your Name"
+              required
+              className="w-full pl-12 pr-4 py-3 bg-white/20 text-white rounded-lg border border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white"
+            />
           </div>
+
+          {/* Email Input */}
+          <div className="relative">
+            <FiMail className="absolute left-4 top-3 text-white/70" />
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="Your Email"
+              required
+              className="w-full pl-12 pr-4 py-3 bg-white/20 text-white rounded-lg border border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white"
+            />
+          </div>
+
+          {/* Message Input */}
+          <div className="relative">
+            <FiMessageCircle className="absolute left-4 top-3 text-white/70" />
+            <textarea
+              name="message"
+              value={formData.message}
+              onChange={handleChange}
+              placeholder="Your Message"
+              rows={4}
+              required
+              className="w-full pl-12 pr-4 py-3 bg-white/20 text-white rounded-lg border border-white/30 placeholder-white/60 focus:outline-none focus:ring-2 focus:ring-white"
+            ></textarea>
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full flex items-center justify-center gap-2 py-3 bg-white/30 hover:bg-white/40 text-white font-semibold rounded-lg shadow-md transition duration-300"
+          >
+            <FiSend className="text-lg" />
+            Send Message
+          </button>
         </form>
 
+        {/* Status Message */}
         {status && (
-          <p className="text-center text-lg mt-4 text-gray-700">{status}</p>
+          <p className="text-center text-lg mt-4 text-white bg-black/40 p-3 rounded-lg">
+            {status}
+          </p>
         )}
       </div>
     </section>

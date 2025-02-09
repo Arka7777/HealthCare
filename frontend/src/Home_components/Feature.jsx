@@ -57,7 +57,7 @@ export default function Feature() {
           Smarter Healthcare Solutions 🚀
         </motion.h2>
         <p className="text-lg sm:text-xl text-gray-600 mb-12">
-          Find doctors, medicines, and clinics—all in one place.
+          {/* Find doctors, medicines, and clinics—all in one place. */}
         </p>
 
         {/* Top Feature Grid */}

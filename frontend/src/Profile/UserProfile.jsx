@@ -104,7 +104,7 @@ const UserProfile = () => {
 
             <div className="flex items-center gap-3">
               <IoIosCall className="h-6 w-6" />
-              <p>9737483737</p>
+              <p>{user?.phoneNumber}</p>
             </div>
 
             <div className="flex items-center gap-3">
@@ -126,7 +126,7 @@ const UserProfile = () => {
               className="mt-4 text-2xl inline-block px-4 py-2 rounded-lg hover:text-red-500 transition"
               onClick={() => setOpen(true)}
             >
-              <FaRegEdit />
+              {/* <FaRegEdit /> */}
             </button>
           </div>
         </div>
