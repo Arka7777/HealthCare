@@ -3,6 +3,8 @@
 import { useLocation } from "react-router-dom"
 import { useState, useEffect } from "react"
 import { MapPin, Phone, Clock, Calendar, Star } from "lucide-react"
+import { toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 import clinics from "./ClinicData"
 import { Link } from "react-router-dom"
 
@@ -37,7 +39,6 @@ if (navigator.geolocation) {
     let clinicFromLocation = location.state?.clinic
   
     if (!clinicFromLocation) {
-      // Extract the clinic ID from the URL path
       const clinicId = location.pathname.split("/").pop()
       clinicFromLocation = clinics.find((c) => c.id.toString() === clinicId)
     }
@@ -76,6 +77,19 @@ if (navigator.geolocation) {
       default:
         return true
     }
+  }
+
+  function handleBooking() {
+    toast.success("Booking Successful", {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "colored",
+    })
   }
 
   return (
@@ -132,6 +146,7 @@ if (navigator.geolocation) {
             </div>
           </div>
 
+
           <div className="bg-white p-6 rounded-lg shadow-lg">
             <h3 className="text-xl font-bold text-blue-600 mb-4">Location Map</h3>
             <a
@@ -150,6 +165,7 @@ if (navigator.geolocation) {
               ></iframe>
             </a>
           </div>
+
         </section>
 
         <section id="filters" className="bg-white p-6 rounded-lg shadow-lg">
@@ -179,18 +195,6 @@ if (navigator.geolocation) {
                 </option>
               ))}
             </select>
-            <select
-              value={filters.time}
-              onChange={(e) => setFilters({ ...filters, time: e.target.value })}
-              className="border rounded-lg p-2"
-            >
-              <option value="">All Times</option>
-              {times.map((time, index) => (
-                <option key={index} value={time}>
-                  {time}
-                </option>
-              ))}
-            </select>
           </div>
         </section>
 
@@ -201,15 +205,10 @@ if (navigator.geolocation) {
               <div key={index} className="bg-white p-5 rounded-lg shadow-lg">
                 <h3 className="text-lg font-bold text-blue-600 mb-2">{doctor.name}</h3>
                 <p className="text-gray-600 text-base mb-2">{doctor.specialty}</p>
-                <p className="flex items-center gap-2 text-gray-600 text-sm">
-                  <Calendar className="text-blue-600" size={16} />
-                  <span>{doctor.availableDays.join(", ")}</span>
-                </p>
-                <p className="flex items-center gap-2 text-gray-600 text-sm mb-4">
-                  <Clock className="text-blue-600" size={16} />
-                  <span>{doctor.availableTime}</span>
-                </p>
-                <button className="w-full bg-blue-600 text-white px-4 py-2 text-sm rounded-full hover:bg-blue-700 transition">
+                <button
+                  className="w-full bg-blue-600 text-white px-4 py-2 text-sm rounded-full hover:bg-blue-700 transition"
+                  onClick={handleBooking}
+                >
                   Book Appointment
                 </button>
               </div>

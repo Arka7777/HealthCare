@@ -8,7 +8,8 @@ import Blog from "./Home_components/Blog"
 import Footer from "./Home_components/Footer"
 import About_us from "./Home_components/About_us"
 import Find_Doctors from "./FindDoctors/Find_Doctors"
-import Search_Medicines from "./Home_components/Search_Medicines"
+// import Search_Medicines from "./Home_components/Search_Medicines"
+import SearchPage from "./medicine/pages/SearchPage.jsx"
 import Winter from "./Blog_article_components/Winter"
 import { Five } from "./Blog_article_components/Five"
 import Insurance from "./Blog_article_components/Insurance"
@@ -32,12 +33,15 @@ import MedicineSalesForecasting from "./Home_components/MedicineSalesForecasting
 
 
 const ProtectedRoute = ({ children }) => {
-  const { isAuth, setIsAuth } = useContext(AuthContext)
-  if (!isAuth) {
-    return <Navigate to="/login" replace />
+  const { isAuth } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
+
+  if (!isAuth && !token) {
+    return <Navigate to="/login" replace />;
   }
-  return <>{children}</>
-}
+
+  return <>{children}</>;
+};
 
 export default function App() {
   // const navigate = useNavigate()
@@ -146,7 +150,7 @@ export default function App() {
       element: (
         <>
           <Navbar />
-          {isAuth?<UserProfile/>:<AuthPage />}
+          {localStorage.getItem("token") ? <UserProfile /> : <AuthPage />}
         </>
       ),
     },
@@ -162,10 +166,10 @@ export default function App() {
     {
       path: "/about",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           {isAuth ? <About_us /> : <AuthPage />}
-        </>
+        </ProtectedRoute>
       ),
     },
     {
@@ -180,10 +184,10 @@ export default function App() {
     {
       path: "/med_sale_ForeCasting",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           <MedicineSalesForecasting />
-          </>
+          </ProtectedRoute>
       ),
     },
     {
@@ -209,17 +213,17 @@ export default function App() {
       element: (
         <ProtectedRoute>
           <Navbar />
-          <Search_Medicines />
+          <SearchPage />
         </ProtectedRoute>
       ),
     },
     {
       path: "/discover-clinics",
       element: (
-        <>
+        <ProtectedRoute>
           <Navbar />
           <ClinicListPage />
-          </>
+          </ProtectedRoute>
       ),
     },
     {
@@ -243,19 +247,19 @@ export default function App() {
     {
       path: "/five",
       element: (
-        <ProtectedRoute>
+        <>
           <Navbar />
           <Five />
-        </ProtectedRoute>
+        </>
       ),
     },
     {
       path: "/insurance",
       element: (
-        <ProtectedRoute>
+        <>
           <Navbar />
           <Insurance />
-        </ProtectedRoute>
+        </>
       ),
     },
     {
@@ -305,6 +309,25 @@ export default function App() {
         </>
       ),
     },
+    {
+      path:"/medirecom",
+      element:(
+        <ProtectedRoute>
+        <Navbar/>
+        <MedicinePrediction/>
+        </ProtectedRoute>
+      )
+    },
+    {
+      path:"/drrecom",
+      element:(
+        <ProtectedRoute>
+        <Navbar/>
+        <DoctorPrediction/>
+        </ProtectedRoute>
+      )
+    },
+    
     
     //Admin Panels
     //Clinic Admin Panel

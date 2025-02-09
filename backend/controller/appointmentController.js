@@ -1,6 +1,7 @@
 import { Appointment } from "../model/appointmentModel.js"
 export const bookAppo = async(req,res)=>{
     try {
+        
         console.log(req.body)
         const {name,phoneNumeber,drName,address,clinicName,date} = req.body
 
@@ -19,7 +20,8 @@ export const bookAppo = async(req,res)=>{
               drName,
               address,
               clinicName,
-              date
+              date,
+              status:"pending" //default
             });
             return res.status(201).json({
       message:"Appoinment booked successfully",

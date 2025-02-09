@@ -39,11 +39,14 @@ const UserProfile = () => {
     }
   };
 
+  const [logoutTriggered, setLogoutTriggered] = useState(false);
+
   const logOut = () => {
     localStorage.removeItem("token");
     setAuth(false);
     setUser(null);
-    navigate("/");
+    setLogoutTriggered((prev) => !prev); // Force re-render
+    navigate("/", { replace: true });
   };
 
   return (
