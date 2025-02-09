@@ -11,8 +11,8 @@ const appointmentSchema=new mongoose.Schema({
   phoneNumber:{
     // type:mongoose.Schema.Types.ObjectId,
     type:Number,
-    ref:"User",
-    required:true
+    // ref:"User",
+    // required:true
   },
   drName:{
     type:String,
@@ -20,7 +20,7 @@ const appointmentSchema=new mongoose.Schema({
   },
   start:{
     type:String,
-    required:true,
+    // required:true,
     default:"pending",
   },
   clinicName:{
@@ -31,7 +31,7 @@ const appointmentSchema=new mongoose.Schema({
   },
   date:{
     type:Date,
-    required:true,
+    default:Date.now()
   }
 
 })

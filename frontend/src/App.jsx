@@ -27,12 +27,9 @@ import { AuthContext } from "./AuthPage/AuthContext";
 import Edit from "./Profile/Edit"
 import { useSelector ,useDispatch} from "react-redux";
 // import store from "../redux/store";
-import { setUser } from "./redux/authslice"
+// import { setUser } from "./redux/authslice"
 import clinicData from "./Clinic/ClinicData"
 import MedicineSalesForecasting from "./Home_components/MedicineSalesForecasting.jsx"
-// import Recomendation from "./Home_components/Recomendation.jsx"
-import MedicinePrediction from "./Home_components/MedicinePrediction.jsx"
-import DoctorPrediction from "./Home_components/DoctorPrediction.jsx"
 
 
 const ProtectedRoute = ({ children }) => {
@@ -49,9 +46,9 @@ const ProtectedRoute = ({ children }) => {
 export default function App() {
   // const navigate = useNavigate()
   // const [isAuth,setIsAuth] = useState(false)
-  const dispatch = useDispatch();
-  const { user } = useSelector((store) => store.auth);
-  const { isAuth, setIsAuth,bookings,setBookings} = useContext(AuthContext)
+  // const dispatch = useDispatch();
+  // const { user } = useSelector((store) => store.auth);
+  const { isAuth, user ,setUser,setIsAuth,bookings,setBookings,clinics,setClinics} = useContext(AuthContext)
   const token = localStorage.getItem("token")
   // if (!token) {
   //       setIsAuth(false);
@@ -59,57 +56,75 @@ export default function App() {
   //       return;
 
   //     }
-  // const client = axios.create({
-  //   baseURL: "/api",
-  // })
-  // // const [user,setUser] = useState(null)
+  const client = axios.create({
+    baseURL: "/api",
+  })
+  // const [user,setUser] = useState(null)
 
-  // const getUser = async () => {
-  //   try {
-  //     const headers = {
-  //       "Authorization": token,
-  //     };
-  //     const response = await client.post('/api/v1/getUser', null, { headers })
+  const getUser = async () => {
+    try {
+      const headers = {
+        "Authorization": token,
+      };
+      const response = await client.post('/api/v1/getUser', null, { headers })
 
-  //     console.log(response.data)
-  //     dispatch(setUser(response.data))
-  //     setIsAuth(true)
-  //   } catch (error) {
-  //     console.log("fetching error :", error)
-  //     setIsAuth(false)
-  //   }
+      console.log(response.data)
+      setUser(response.data)
+      setIsAuth(true)
+    } catch (error) {
+      console.log("fetching error :", error)
+      setIsAuth(false)
+    }
 
-  // }
-  //  const getBookings = async () => {
-  //   try {
-  //     var response
-  //     if(user){
-  //        response = await client.post(`/api/v1/book/getBookings/${user.name}`)
-  //     } 
-  //      setBookings(Array.isArray(response.data.bookings) ? response.data.bookings : [])
-  //     console.log("bookings: ",bookings)
-  //   } catch (error) {
-  //     console.log("fetching  bookings error :", error)
-  //   }
+  }
 
-  // }
+    const getClinics = async () => {
+    try {
+      const headers = {
+        "Authorization": token,
+      };
+      const response = await client.post('/api/v1/clinics/getAllClinics', null, { headers })
+
+      console.log(response.data)
+      setClinics(response.data)
+      setIsAuth(true)
+    } catch (error) {
+      console.log("fetching error :", error)
+      setIsAuth(false)
+    }
+
+  }
+   const getBookings = async () => {
+    try {
+      var response
+      if(user){
+         response = await client.post(`/api/v1/book/getBookings/${user.name}`)
+      } 
+       setBookings(Array.isArray(response.data.bookings) ? response.data.bookings : [])
+      console.log("bookings: ",bookings)
+    } catch (error) {
+      console.log("fetching  bookings error :", error)
+    }
+
+  }
   
-  // useEffect(() => {
-  //   getUser(); // Fetch user data
+  useEffect(() => {
+    getUser(); // Fetch user data
+    getClinics()
     
-  // }, [token]); // Runs once when the component mounts
+  }, [token]); // Runs once when the component mounts
 
-  // useEffect(() => {
-  //   if (user) {  // Ensure user is set before logging
-  //    getBookings();
-  //     const timeout = setTimeout(() => {
+  useEffect(() => {
+    if (user) {  // Ensure user is set before logging
+     getBookings();
+      const timeout = setTimeout(() => {
        
-  //       console.log("User:", user);
-  //     }, 2000); // Delay console log by 2 seconds
+        console.log("User:", user);
+      }, 2000); // Delay console log by 2 seconds
 
-  //     return () => clearTimeout(timeout); // Cleanup timeout on unmount
-  //   }
-  // }, [user]); // Runs every time `user` state updates
+      return () => clearTimeout(timeout); // Cleanup timeout on unmount
+    }
+  }, [user]); // Runs every time `user` state updates
   
 
   
@@ -262,7 +277,7 @@ export default function App() {
       element: (
         <>
           <Navbar />
-          <ClinicPage clinic={clinicData}/>
+          <ClinicPage clinic={clinics||[]}/>
         </>
       ),
     },
@@ -271,7 +286,7 @@ export default function App() {
       element: (
         <>
           <Navbar />
-          <RateClinicPage clinic={clinicData}/>
+          <RateClinicPage clinic={clinics||[]}/>
         </>
       ),
     },

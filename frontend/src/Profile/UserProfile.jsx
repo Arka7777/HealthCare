@@ -14,8 +14,8 @@ import Edit from "../Profile/Edit";
 import store from "../redux/store";
 
 const UserProfile = () => {
-  const { user } = useSelector((store) => store.auth);
-  const { bookings, setUser, setAuth } = useContext(AuthContext);
+  // const { user } = useSelector((store) => store.auth);
+  const { bookings, user, setUser, setAuth } = useContext(AuthContext);
   const [open, setOpen] = useState(false);
   const navigate = useNavigate();
   const fileInputRef = useRef(null);

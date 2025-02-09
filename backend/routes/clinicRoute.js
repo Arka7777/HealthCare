@@ -12,7 +12,7 @@ const router = express.Router()
 router.post('/signup', clinicRegister)
 router.post('/login', login)
 router.put('/edit/:id',updateProfile)
-router.get('/getAllClinics',getAllClinics)
+router.post('/getAllClinics',getAllClinics)
 router.get('/logout',logout)
 
 
