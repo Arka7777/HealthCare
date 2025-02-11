@@ -155,7 +155,7 @@ if (navigator.geolocation) {
               rel="noopener noreferrer"
             >
               <iframe
-                src={`https://maps.google.com/maps/embed/v1/directions?origin=${lat},${lon}&destination=${clinic.lat},${clinic.lng}&key=AIzaSyD76crtro2WCvfYZqzcyKGfavtO-cwqURc`}
+                src={``}
                 width="100%"
                 height="250"
                 className="rounded-md"
